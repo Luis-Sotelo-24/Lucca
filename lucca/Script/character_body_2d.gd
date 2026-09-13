@@ -6,7 +6,8 @@ extends CharacterBody2D
 @export var respawn_position: Vector2 = Vector2(-886, 214)
 @export var fall_death_y: float = 400
 
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animated_sprite: AnimatedSprite2D = $Jugador
+@onready var animated_sprite_ataque: AnimatedSprite2D = $Jugador/Area2D/Ataque
 @onready var stats: Stats = Stats.new()
 @onready var camera: Camera2D = $Camera2D
 
@@ -14,7 +15,7 @@ signal health_changed(health: int)
 
 enum State { SENTADO, CAMINAR, CORRER, SALTAR, CAER, ATACAR, MORIR }
 var current_state: State = State.SENTADO
-var is_attacking: bool = false
+var ataque: bool = false
 
 func _ready() -> void:
 	add_to_group("player")
@@ -31,8 +32,8 @@ func _physics_process(delta: float) -> void:
 		velocity.y = jump_velocity
 	
 	# Ataque
-	if Input.is_action_just_pressed("Atacar") and not is_attacking:
-		attack()
+	if Input.is_action_just_pressed("Ataque"):
+		ataque = true
 	
 	# Movimiento horizontal
 	var direction := Input.get_axis("Izquierda", "Derecha")
@@ -49,7 +50,8 @@ func _physics_process(delta: float) -> void:
 	if global_position.y > fall_death_y:		
 		take_damage(stats.max_health)  # Muerte instantánea
 	
-	update_state(direction)
+	update_state_movement(direction)
+	update_state_attack()
 	update_animation()
 	update_camera_limits()
 
@@ -82,11 +84,6 @@ func update_camera_limits() -> void:
 		camera_pos.y = clamp(camera_pos.y, camera.limit_top + camera_half.y, camera.limit_bottom - camera_half.y)
 		camera.global_position = camera_pos
 
-func attack() -> void:
-	is_attacking = true
-	await get_tree().create_timer(0.3).timeout
-	is_attacking = false
-
 func get_stats() -> Stats:
 	return stats
 
@@ -105,7 +102,7 @@ func die() -> void:
 	health_changed.emit(stats.health)
 	print("Respawn completado. Vida restaurada: ", stats.health)
 
-func update_state(direction: float) -> void:
+func update_state_movement(direction: float) -> void:
 	if stats.health == 0:
 		current_state = State.MORIR
 	elif not is_on_floor():
@@ -120,6 +117,8 @@ func update_state(direction: float) -> void:
 				current_state = State.CORRER
 		else:
 			current_state = State.SENTADO
+			
+
 
 func update_animation() -> void:
 	match current_state:
@@ -134,7 +133,8 @@ func update_animation() -> void:
 		State.CORRER:
 			animated_sprite.play("Correr Derecha")
 		State.ATACAR:
-			animated_sprite.play("Caminata Derecha")
+			animated_sprite.play("Ataque")
+			animated_sprite_ataque.play("Garra 1")
 		State.MORIR:
 			animated_sprite.play("Eliminado")
 

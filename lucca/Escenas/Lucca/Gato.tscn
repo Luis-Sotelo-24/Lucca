@@ -3,9 +3,26 @@
 [ext_resource type="Script" uid="uid://bbdirsx6lgafr" path="res://Script/character_body_2d.gd" id="1_ba872"]
 [ext_resource type="Texture2D" uid="uid://crylal7xhk8bl" path="res://Sprites/Gato 3.png" id="2_6fja7"]
 [ext_resource type="Texture2D" uid="uid://dycmqj2wiuifi" path="res://Sprites/Gato 1.png" id="3_8dw11"]
+[ext_resource type="Texture2D" uid="uid://60qwfnktwrhp" path="res://Sprites/Ataque.png" id="4_6fja7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yryme"]
 radius = 4.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8dw11"]
+atlas = ExtResource("2_6fja7")
+region = Rect2(301, 1088, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yryme"]
+atlas = ExtResource("2_6fja7")
+region = Rect2(365, 1088, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ainjh"]
+atlas = ExtResource("2_6fja7")
+region = Rect2(301, 1088, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_corww"]
+atlas = ExtResource("2_6fja7")
+region = Rect2(365, 1088, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6545s"]
 atlas = ExtResource("2_6fja7")
@@ -163,6 +180,35 @@ region = Rect2(556, 1280, 64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_8dw11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yryme")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ainjh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_corww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ainjh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_corww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ainjh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_corww")
+}],
+"loop": 0,
+"name": &"Ataque",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_6545s")
 }],
 "loop": 1,
@@ -316,8 +362,80 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_va1n0"]
+atlas = ExtResource("4_6fja7")
+region = Rect2(0, 0, 73, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_do210"]
+atlas = ExtResource("4_6fja7")
+region = Rect2(73, 0, 73, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smt4r"]
+atlas = ExtResource("4_6fja7")
+region = Rect2(146, 0, 73, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fv1jx"]
+atlas = ExtResource("4_6fja7")
+region = Rect2(219, 0, 73, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1v3v4"]
+atlas = ExtResource("4_6fja7")
+region = Rect2(292, 0, 73, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frn1p"]
+atlas = ExtResource("4_6fja7")
+region = Rect2(365, 0, 73, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0wjl"]
+atlas = ExtResource("4_6fja7")
+region = Rect2(438, 0, 73, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkqb5"]
+atlas = ExtResource("4_6fja7")
+region = Rect2(511, 0, 73, 21)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qpqu3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_va1n0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_do210")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smt4r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fv1jx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1v3v4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frn1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o0wjl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vkqb5")
+}],
+"loop": 0,
+"name": &"Garra 1",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qpqu3"]
+size = Vector2(19, 19)
+
 [node name="Gato" type="CharacterBody2D" unique_id=1460887982]
 script = ExtResource("1_ba872")
+speed = null
+jump_velocity = null
+gravity = null
+respawn_position = null
+fall_death_y = null
 
 [node name="Colision Shape" type="CollisionShape2D" parent="." unique_id=1997453932]
 position = Vector2(0, -7.0000005)
@@ -325,10 +443,26 @@ rotation = 1.5707964
 scale = Vector2(1.5, 1)
 shape = SubResource("CapsuleShape2D_yryme")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1134769079]
+[node name="Jugador" type="AnimatedSprite2D" parent="." unique_id=1134769079]
 position = Vector2(1, -15)
 sprite_frames = SubResource("SpriteFrames_ainjh")
-animation = &"Eliminado"
+animation = &"Ataque"
+frame = 3
+frame_progress = 1.0
+
+[node name="Area2D" type="Area2D" parent="Jugador" unique_id=422040283]
+
+[node name="Ataque" type="AnimatedSprite2D" parent="Jugador/Area2D" unique_id=1379477538]
+position = Vector2(26, 4)
+scale = Vector2(0.49657542, 0.86904764)
+sprite_frames = SubResource("SpriteFrames_qpqu3")
+animation = &"Garra 1"
+frame = 7
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Jugador/Area2D" unique_id=1552529953]
+position = Vector2(30.5, 5.5)
+shape = SubResource("RectangleShape2D_qpqu3")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=408934267]
 position = Vector2(1, 0)
