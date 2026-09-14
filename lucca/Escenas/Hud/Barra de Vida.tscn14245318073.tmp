@@ -2,12 +2,9 @@
 
 [ext_resource type="Script" uid="uid://devtirg27cbbq" path="res://Script/barra_de_vida.gd" id="1_rwpoq"]
 [ext_resource type="Texture2D" uid="uid://bxc600s68eqi2" path="res://Escenas/Hud/HealthBar Empty.png" id="1_v0kk5"]
-[ext_resource type="Texture2D" uid="uid://bxj4if7ov01qu" path="res://Escenas/Hud/HealthBar Background.png" id="2_1c7vy"]
 [ext_resource type="Texture2D" uid="uid://bjwqjwpvq1u6j" path="res://Escenas/Hud/HealthBar Full.png" id="2_rwpoq"]
 
 [node name="BarraDeVida" type="CanvasLayer" unique_id=1332243261]
-scale = Vector2(3, 3)
-transform = Transform2D(3, 0, 0, 3, 0, 0)
 script = ExtResource("1_rwpoq")
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1929647906]
@@ -18,5 +15,5 @@ anchor_bottom = 0.022000002
 offset_right = 2.8399963
 offset_bottom = 1.7439985
 texture_under = ExtResource("1_v0kk5")
-texture_over = ExtResource("2_1c7vy")
+texture_over = ExtResource("1_v0kk5")
 texture_progress = ExtResource("2_rwpoq")

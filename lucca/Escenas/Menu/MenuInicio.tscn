@@ -1,0 +1,144 @@
+[gd_scene format=3 uid="uid://cmbhx166dyjnw"]
+
+[ext_resource type="Script" uid="uid://32hjjhv7vhu8" path="res://Script/MenuInicio.gd" id="1_menu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_menu_panel"]
+bg_color = Color(0.0705882, 0.172549, 0.117647, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.32549, 0.662745, 0.423529, 0.7)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.247059, 0.545098, 0.34902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
+bg_color = Color(0.32549, 0.662745, 0.423529, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="MenuInicio" type="Control" unique_id=366884186]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1993582361]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0352941, 0.101961, 0.0784314, 1)
+
+[node name="MenuPanel" type="Panel" parent="." unique_id=114954259]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -280.0
+offset_right = 230.0
+offset_bottom = 280.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_menu_panel")
+
+[node name="Content" type="VBoxContainer" parent="." unique_id=1594323392]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -220.0
+offset_right = 180.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Title" type="Label" parent="Content" unique_id=1489750434]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.858824, 0.960784, 0.8, 1)
+theme_override_font_sizes/font_size = 44
+text = "LUCCA"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Content" unique_id=116958300]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.678431, 0.803922, 0.690196, 1)
+theme_override_font_sizes/font_size = 18
+text = "Aventura en el bosque"
+horizontal_alignment = 1
+
+[node name="SpacerTop" type="Control" parent="Content" unique_id=143645870]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="ControlsPanel" type="PanelContainer" parent="Content" unique_id=1430947480]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_button")
+
+[node name="Margin" type="MarginContainer" parent="Content/ControlsPanel" unique_id=1532209776]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 16
+
+[node name="Controls" type="Label" parent="Content/ControlsPanel/Margin" unique_id=855040328]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "CONTROLES
+
+A - Mover a la izquierda
+D - Mover a la derecha
+
+Shift - Correr
+Espacio - Saltar
+Click izquierdo - Atacar"
+horizontal_alignment = 1
+
+[node name="SpacerBottom" type="Control" parent="Content" unique_id=955778580]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="Content" unique_id=474039087]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+text = "INICIAR JUEGO"
+
+[node name="Hint" type="Label" parent="Content" unique_id=1593288283]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.678431, 0.803922, 0.690196, 1)
+theme_override_font_sizes/font_size = 13
+text = "También podés presionar Enter o Espacio"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="Content/StartButton" to="." method="_on_start_button_pressed"]

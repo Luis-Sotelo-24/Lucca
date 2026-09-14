@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://dycmqj2wiuifi" path="res://Sprites/Gato 1.png" id="3_8dw11"]
 [ext_resource type="Texture2D" uid="uid://60qwfnktwrhp" path="res://Sprites/Ataque.png" id="4_6fja7"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yryme"]
-radius = 4.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6fja7"]
+size = Vector2(13.333334, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8dw11"]
 atlas = ExtResource("2_6fja7")
@@ -423,46 +423,41 @@ animations = [{
 }],
 "loop": 0,
 "name": &"Garra 1",
-"speed": 5.0
+"speed": 20.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qpqu3"]
-size = Vector2(19, 19)
+size = Vector2(41.5, 19)
 
-[node name="Gato" type="CharacterBody2D" unique_id=1460887982]
+[node name="Gato" type="CharacterBody2D" unique_id=1460887982 groups=["player"]]
 script = ExtResource("1_ba872")
-speed = null
-jump_velocity = null
-gravity = null
-respawn_position = null
-fall_death_y = null
 
 [node name="Colision Shape" type="CollisionShape2D" parent="." unique_id=1997453932]
-position = Vector2(0, -7.0000005)
+position = Vector2(0.99999976, -12)
 rotation = 1.5707964
 scale = Vector2(1.5, 1)
-shape = SubResource("CapsuleShape2D_yryme")
+shape = SubResource("RectangleShape2D_6fja7")
 
 [node name="Jugador" type="AnimatedSprite2D" parent="." unique_id=1134769079]
 position = Vector2(1, -15)
 sprite_frames = SubResource("SpriteFrames_ainjh")
-animation = &"Ataque"
-frame = 3
-frame_progress = 1.0
+animation = &"Esperar"
 
-[node name="Area2D" type="Area2D" parent="Jugador" unique_id=422040283]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=408934267]
+position = Vector2(1, 0)
+zoom = Vector2(2, 2)
 
-[node name="Ataque" type="AnimatedSprite2D" parent="Jugador/Area2D" unique_id=1379477538]
-position = Vector2(26, 4)
+[node name="Area2D" type="Area2D" parent="." unique_id=422040283]
+position = Vector2(27, -10)
+
+[node name="Ataque" type="AnimatedSprite2D" parent="Area2D" unique_id=1379477538]
+position = Vector2(-1, 9.536743e-07)
 scale = Vector2(0.49657542, 0.86904764)
 sprite_frames = SubResource("SpriteFrames_qpqu3")
 animation = &"Garra 1"
 frame = 7
 frame_progress = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Jugador/Area2D" unique_id=1552529953]
-position = Vector2(30.5, 5.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1552529953]
+position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_qpqu3")
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=408934267]
-position = Vector2(1, 0)
