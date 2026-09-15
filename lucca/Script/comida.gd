@@ -9,7 +9,7 @@ var time := 0.0
 
 func _ready():
 	base_y = spr.position.y
-	spr.play("default") # si tu anim se llama distinto cámbiala aquí, si es 1 solo frame igual funciona
+	spr.play("Pescado")
 	body_entered.connect(_on_body_entered)
 
 func _process(delta):
@@ -24,5 +24,4 @@ func _on_body_entered(body):
 			var st = body.get_stats()
 			st.health = min(st.health + heal_amount, st.max_health)
 			body.emit_signal("health_changed", st.health)
-			print("Curado +", heal_amount, " Vida:", st.health)
 		queue_free()

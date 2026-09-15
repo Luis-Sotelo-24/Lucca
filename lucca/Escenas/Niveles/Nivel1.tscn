@@ -7,6 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://b7n26qyigkfra" path="res://Escenas/Hud/Barra de Vida.tscn" id="4_ltv3e"]
 [ext_resource type="PackedScene" uid="uid://dlroh0sul2w4b" path="res://Escenas/Enemigos/Enemigo1.tscn" id="5_ltv3e"]
 [ext_resource type="PackedScene" uid="uid://clabbpdswk78c" path="res://Escenas/Consumibles/Comida.tscn" id="7_v2l7u"]
+[ext_resource type="PackedScene" path="res://Escenas/Enemigos/Chef.tscn" id="8_chef"]
+[ext_resource type="PackedScene" path="res://Escenas/Objetos/PortalNivel.tscn" id="9_portal"]
+[ext_resource type="PackedScene" path="res://Escenas/Objetos/Checkpoint.tscn" id="10_checkpoint"]
+[ext_resource type="PackedScene" path="res://Escenas/Hud/Pausa.tscn" id="11_pause"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_iadcy"]
 
@@ -2790,8 +2794,24 @@ position = Vector2(-2098, -743)
 [node name="Enemigo2" parent="." unique_id=1131738798 instance=ExtResource("5_ltv3e")]
 position = Vector2(-2055, -337)
 
+[node name="Chef" parent="." instance=ExtResource("8_chef")]
+position = Vector2(-1810, -402)
+
+[node name="CheckpointBosque" parent="." instance=ExtResource("10_checkpoint")]
+position = Vector2(-2140, -743)
+
+[node name="CheckpointPortal" parent="." instance=ExtResource("10_checkpoint")]
+position = Vector2(-1740, -402)
+
+[node name="PortalCaverna" parent="." instance=ExtResource("9_portal")]
+position = Vector2(-1510, -402)
+target_scene = "res://Escenas/Niveles/Nivel2.tscn"
+prompt = "ENTRAR A LA CAVERNA"
+
 [node name="Comida" parent="." unique_id=904611366 instance=ExtResource("7_v2l7u")]
 position = Vector2(-1699, -402)
 
 [node name="Comida2" parent="." unique_id=1138814547 instance=ExtResource("7_v2l7u")]
 position = Vector2(-1596, -458)
+
+[node name="Pausa" parent="." instance=ExtResource("11_pause")]

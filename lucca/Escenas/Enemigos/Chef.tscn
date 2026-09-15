@@ -1,0 +1,150 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Script/chef.gd" id="1_chef"]
+[ext_resource type="Texture2D" path="res://Sprites/chef.png" id="2_chef"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_a"]
+atlas = ExtResource("2_chef")
+region = Rect2(0, 384, 352, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_b"]
+atlas = ExtResource("2_chef")
+region = Rect2(352, 384, 352, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_a"]
+atlas = ExtResource("2_chef")
+region = Rect2(0, 0, 352, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_b"]
+atlas = ExtResource("2_chef")
+region = Rect2(352, 0, 352, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_c"]
+atlas = ExtResource("2_chef")
+region = Rect2(704, 0, 352, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_d"]
+atlas = ExtResource("2_chef")
+region = Rect2(1056, 0, 352, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_e"]
+atlas = ExtResource("2_chef")
+region = Rect2(1408, 0, 352, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_f"]
+atlas = ExtResource("2_chef")
+region = Rect2(1760, 0, 352, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_g"]
+atlas = ExtResource("2_chef")
+region = Rect2(2112, 0, 352, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_h"]
+atlas = ExtResource("2_chef")
+region = Rect2(2464, 0, 352, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_strike_a"]
+atlas = ExtResource("2_chef")
+region = Rect2(0, 768, 352, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_strike_b"]
+atlas = ExtResource("2_chef")
+region = Rect2(352, 768, 352, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_strike_c"]
+atlas = ExtResource("2_chef")
+region = Rect2(704, 768, 352, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_strike_d"]
+atlas = ExtResource("2_chef")
+region = Rect2(1056, 768, 352, 384)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_chef"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_b")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_strike_a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_strike_b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_strike_c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_strike_d")
+}],
+"loop": 0,
+"name": &"Strike",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_h")
+}],
+"loop": 1,
+"name": &"Walk",
+"speed": 9.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_chef"]
+size = Vector2(42, 62)
+
+[node name="Chef" type="CharacterBody2D" groups=["enemy"]]
+script = ExtResource("1_chef")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -31)
+shape = SubResource("RectangleShape2D_chef")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -35)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_chef")
+animation = &"Idle"
+autoplay = "Idle"
+
+[node name="Speech" type="Label" parent="."]
+offset_left = -100.0
+offset_top = -145.0
+offset_right = 100.0
+offset_bottom = -95.0
+theme_override_colors/font_color = Color(1, 0.913725, 0.572549, 1)
+theme_override_colors/font_outline_color = Color(0.0588235, 0.0431373, 0.0235294, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 17
+text = "Mmm... hoy sí\ntengo cena."
+horizontal_alignment = 1
+visible = false

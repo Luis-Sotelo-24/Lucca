@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Script/checkpoint.gd" id="1_checkpoint"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_checkpoint"]
+radius = 30.0
+
+[node name="Checkpoint" type="Area2D"]
+script = ExtResource("1_checkpoint")
+
+[node name="Flag" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-3, 8, 3, 8, 3, -68, -3, -68)
+color = Color(0.87451, 0.831373, 0.603922, 1)
+
+[node name="Banner" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(3, -65, 36, -52, 3, -38)
+color = Color(0.380392, 0.886275, 0.682353, 1)
+
+[node name="Glow" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-26, 15, 26, 15, 18, 27, -18, 27)
+color = Color(0.301961, 1, 0.611765, 0.7)
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -15)
+shape = SubResource("CircleShape2D_checkpoint")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -90.0
+offset_top = 32.0
+offset_right = 90.0
+offset_bottom = 54.0
+theme_override_colors/font_color = Color(0.74902, 1, 0.847059, 1)
+theme_override_colors/font_outline_color = Color(0.0470588, 0.0901961, 0.0666667, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 13
+text = "PUNTO SEGURO"
+horizontal_alignment = 1

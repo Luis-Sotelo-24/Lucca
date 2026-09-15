@@ -1,34 +1,79 @@
 [gd_scene format=3 uid="uid://cmbhx166dyjnw"]
 
 [ext_resource type="Script" uid="uid://32hjjhv7vhu8" path="res://Script/MenuInicio.gd" id="1_menu"]
+[ext_resource type="Texture2D" path="res://Backgrounds/Background Bosque.png" id="2_forest"]
+[ext_resource type="Texture2D" path="res://Sprites/Gato 3.png" id="3_cat"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_menu_panel"]
-bg_color = Color(0.0705882, 0.172549, 0.117647, 0.96)
+[sub_resource type="AtlasTexture" id="AtlasTexture_cat"]
+atlas = ExtResource("3_cat")
+region = Rect2(300, 768, 64, 64)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_start"]
+bg_color = Color(0.560784, 0.827451, 0.407843, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.32549, 0.662745, 0.423529, 0.7)
+border_color = Color(0.784314, 0.94902, 0.627451, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.0156863, 0.0392157, 0.0313726, 0.65)
+shadow_size = 8
+shadow_offset = Vector2(0, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_start_hover"]
+bg_color = Color(0.705882, 0.929412, 0.490196, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.92549, 1, 0.74902, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.4, 0.85098, 0.384314, 0.35)
+shadow_size = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+bg_color = Color(0.027451, 0.0823529, 0.0666667, 0.88)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.596078, 0.854902, 0.537255, 0.28)
 corner_radius_top_left = 18
 corner_radius_top_right = 18
 corner_radius_bottom_right = 18
 corner_radius_bottom_left = 18
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 18
+shadow_offset = Vector2(0, 10)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
-bg_color = Color(0.247059, 0.545098, 0.34902, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_controls"]
+bg_color = Color(0.0862745, 0.196078, 0.14902, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.596078, 0.854902, 0.537255, 0.18)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
-bg_color = Color(0.32549, 0.662745, 0.423529, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_key"]
+bg_color = Color(0.141176, 0.313726, 0.223529, 1)
+border_width_bottom = 2
+border_color = Color(0.403922, 0.65098, 0.403922, 0.8)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
-[node name="MenuInicio" type="Control" unique_id=366884186]
+[node name="MenuInicio" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,7 +82,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_menu")
 
-[node name="Background" type="ColorRect" parent="." unique_id=1993582361]
+[node name="Forest" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,100 +90,258 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.0352941, 0.101961, 0.0784314, 1)
+texture = ExtResource("2_forest")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="MenuPanel" type="Panel" parent="." unique_id=114954259]
+[node name="ForestTint" type="ColorRect" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -230.0
-offset_top = -280.0
-offset_right = 230.0
-offset_bottom = 280.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_menu_panel")
+mouse_filter = 2
+color = Color(0.0117647, 0.0470588, 0.0431373, 0.58)
 
-[node name="Content" type="VBoxContainer" parent="." unique_id=1594323392]
+[node name="Vignette" type="ColorRect" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -180.0
-offset_top = -220.0
-offset_right = 180.0
-offset_bottom = 220.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 8
-alignment = 1
+mouse_filter = 2
+color = Color(0.00392157, 0.0196078, 0.0156863, 0.28)
 
-[node name="Title" type="Label" parent="Content" unique_id=1489750434]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.858824, 0.960784, 0.8, 1)
-theme_override_font_sizes/font_size = 44
-text = "LUCCA"
-horizontal_alignment = 1
+[node name="TopLine" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 3.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.584314, 0.890196, 0.396078, 0.9)
 
-[node name="Subtitle" type="Label" parent="Content" unique_id=116958300]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.678431, 0.803922, 0.690196, 1)
-theme_override_font_sizes/font_size = 18
-text = "Aventura en el bosque"
-horizontal_alignment = 1
+[node name="Brand" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 46.0
+offset_top = 36.0
+offset_right = 350.0
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0.815686, 0.960784, 0.698039, 0.95)
+theme_override_font_sizes/font_size = 16
+text = "LUCCA  /  EL BOSQUE DESPIERTA"
 
-[node name="SpacerTop" type="Control" parent="Content" unique_id=143645870]
-custom_minimum_size = Vector2(0, 8)
-layout_mode = 2
+[node name="Version" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -125.0
+offset_top = 38.0
+offset_right = -46.0
+offset_bottom = 64.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.729412, 0.847059, 0.729412, 0.8)
+theme_override_font_sizes/font_size = 14
+text = "AVENTURA 2D"
+horizontal_alignment = 2
 
-[node name="ControlsPanel" type="PanelContainer" parent="Content" unique_id=1430947480]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_button")
+[node name="Content" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 46.0
+offset_top = 92.0
+offset_right = -46.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_right = 360
 
-[node name="Margin" type="MarginContainer" parent="Content/ControlsPanel" unique_id=1532209776]
+[node name="MenuCard" type="PanelContainer" parent="Content"]
+custom_minimum_size = Vector2(480, 0)
 layout_mode = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 16
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
 
-[node name="Controls" type="Label" parent="Content/ControlsPanel/Margin" unique_id=855040328]
+[node name="Margin" type="MarginContainer" parent="Content/MenuCard"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/margin_left = 34
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 34
+theme_override_constants/margin_bottom = 28
+
+[node name="Stack" type="VBoxContainer" parent="Content/MenuCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Eyebrow" type="Label" parent="Content/MenuCard/Margin/Stack"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.639216, 0.913725, 0.462745, 1)
 theme_override_font_sizes/font_size = 15
-text = "CONTROLES
+text = "UNA AVENTURA ENTRE SOMBRAS Y HOJAS"
 
-A - Mover a la izquierda
-D - Mover a la derecha
-
-Shift - Correr
-Espacio - Saltar
-Click izquierdo - Atacar"
-horizontal_alignment = 1
-
-[node name="SpacerBottom" type="Control" parent="Content" unique_id=955778580]
-custom_minimum_size = Vector2(0, 4)
+[node name="Title" type="Label" parent="Content/MenuCard/Margin/Stack"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.929412, 0.992157, 0.831373, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.75)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 4
+theme_override_font_sizes/font_size = 68
+text = "LUCCA"
 
-[node name="StartButton" type="Button" parent="Content" unique_id=474039087]
-custom_minimum_size = Vector2(0, 48)
+[node name="Subtitle" type="Label" parent="Content/MenuCard/Margin/Stack"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_button")
-theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
-text = "INICIAR JUEGO"
+theme_override_colors/font_color = Color(0.788235, 0.882353, 0.760784, 1)
+theme_override_font_sizes/font_size = 19
+text = "Explorá el bosque, enfrentá a sus guardianes\ny encontrá el camino hacia la caverna."
 
-[node name="Hint" type="Label" parent="Content" unique_id=1593288283]
+[node name="Divider" type="ColorRect" parent="Content/MenuCard/Margin/Stack"]
+custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.678431, 0.803922, 0.690196, 1)
+mouse_filter = 2
+color = Color(0.592157, 0.862745, 0.462745, 0.35)
+
+[node name="StartButton" type="Button" parent="Content/MenuCard/Margin/Stack"]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.027451, 0.0901961, 0.0470588, 1)
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxFlat_start")
+theme_override_styles/hover = SubResource("StyleBoxFlat_start_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_start_hover")
+text = "COMENZAR AVENTURA"
+
+[node name="Controls" type="PanelContainer" parent="Content/MenuCard/Margin/Stack"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_controls")
+
+[node name="Margin" type="MarginContainer" parent="Content/MenuCard/Margin/Stack/Controls"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 13
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 13
+
+[node name="Rows" type="VBoxContainer" parent="Content/MenuCard/Margin/Stack/Controls/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="ControlsTitle" type="Label" parent="Content/MenuCard/Margin/Stack/Controls/Margin/Rows"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.705882, 0.913725, 0.635294, 1)
 theme_override_font_sizes/font_size = 13
-text = "También podés presionar Enter o Espacio"
+text = "CONTROLES"
+
+[node name="Movement" type="Label" parent="Content/MenuCard/Margin/Stack/Controls/Margin/Rows"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.886275, 0.941176, 0.847059, 1)
+theme_override_font_sizes/font_size = 15
+text = "A / D   Moverse        SHIFT   Correr"
+
+[node name="Action" type="Label" parent="Content/MenuCard/Margin/Stack/Controls/Margin/Rows"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.886275, 0.941176, 0.847059, 1)
+theme_override_font_sizes/font_size = 15
+text = "ESPACIO   Saltar        CLICK   Atacar"
+
+[node name="Hint" type="Label" parent="Content/MenuCard/Margin/Stack"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.639216, 0.780392, 0.647059, 0.9)
+theme_override_font_sizes/font_size = 14
+text = "Presioná Enter para empezar"
 horizontal_alignment = 1
 
-[connection signal="pressed" from="Content/StartButton" to="." method="_on_start_button_pressed"]
+[node name="Hero" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -355.0
+offset_top = -350.0
+offset_right = -45.0
+offset_bottom = -38.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Glow" type="ColorRect" parent="Hero"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 60.0
+offset_right = 290.0
+offset_bottom = 300.0
+color = Color(0.423529, 0.815686, 0.388235, 0.12)
+
+[node name="Cat" type="TextureRect" parent="Hero"]
+layout_mode = 0
+offset_left = 78.0
+offset_top = 30.0
+offset_right = 270.0
+offset_bottom = 222.0
+texture = SubResource("AtlasTexture_cat")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Caption" type="Label" parent="Hero"]
+layout_mode = 0
+offset_top = 235.0
+offset_right = 310.0
+offset_bottom = 260.0
+theme_override_colors/font_color = Color(0.811765, 0.933333, 0.721569, 0.95)
+theme_override_font_sizes/font_size = 17
+text = "Tu camino empieza acá"
+horizontal_alignment = 1
+
+[node name="CaptionLine" type="ColorRect" parent="Hero"]
+layout_mode = 0
+offset_left = 78.0
+offset_top = 270.0
+offset_right = 232.0
+offset_bottom = 272.0
+color = Color(0.576471, 0.890196, 0.396078, 0.8)
+
+[node name="FireflyOne" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -430.0
+offset_top = 130.0
+offset_right = -405.0
+offset_bottom = 155.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.764706, 1, 0.498039, 0.85)
+theme_override_font_sizes/font_size = 20
+text = "*"
+
+[node name="FireflyTwo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
+offset_top = 210.0
+offset_right = -95.0
+offset_bottom = 235.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.764706, 1, 0.498039, 0.7)
+theme_override_font_sizes/font_size = 15
+text = "*"
+
+[node name="Fade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.00392157, 0.0196078, 0.0156863, 0)
+
+[connection signal="pressed" from="Content/MenuCard/Margin/Stack/StartButton" to="." method="_on_start_button_pressed"]

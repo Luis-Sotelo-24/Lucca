@@ -1,0 +1,46 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Script/barrera_salida.gd" id="1_gate"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gate"]
+size = Vector2(34, 155)
+
+[node name="BarreraSalida" type="Node2D"]
+script = ExtResource("1_gate")
+
+[node name="Glow" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-28, 8, 28, 8, 28, -155, -28, -155)
+color = Color(0.25098, 1, 0.686275, 0.55)
+visible = false
+
+[node name="Bars" type="Node2D" parent="."]
+
+[node name="Left" type="Polygon2D" parent="Bars"]
+polygon = PackedVector2Array(-20, 10, -10, 10, -10, -150, -20, -150)
+color = Color(0.847059, 0.239216, 0.184314, 1)
+
+[node name="Center" type="Polygon2D" parent="Bars"]
+polygon = PackedVector2Array(-5, 10, 5, 10, 5, -150, -5, -150)
+color = Color(0.847059, 0.239216, 0.184314, 1)
+
+[node name="Right" type="Polygon2D" parent="Bars"]
+polygon = PackedVector2Array(10, 10, 20, 10, 20, -150, 10, -150)
+color = Color(0.847059, 0.239216, 0.184314, 1)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -72)
+shape = SubResource("RectangleShape2D_gate")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -110.0
+offset_top = -192.0
+offset_right = 110.0
+offset_bottom = -168.0
+theme_override_colors/font_color = Color(1, 0.729412, 0.537255, 1)
+theme_override_colors/font_outline_color = Color(0.0784314, 0.0352941, 0.0235294, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 14
+text = "ACTIVÁ LAS 2 PALANCAS"
+horizontal_alignment = 1

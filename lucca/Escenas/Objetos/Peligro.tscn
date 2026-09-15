@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Script/peligro.gd" id="1_hazard"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hazard"]
+size = Vector2(68, 20)
+
+[node name="Peligro" type="Area2D"]
+script = ExtResource("1_hazard")
+
+[node name="Glow" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-38, 10, 38, 10, 31, -2, 20, 8, 10, -8, 0, 7, -11, -9, -21, 8, -31, -2)
+color = Color(1, 0.14902, 0.0470588, 0.42)
+
+[node name="Flames" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-30, 10, -23, -9, -14, 4, -5, -17, 4, 3, 14, -10, 23, 5, 30, 10)
+color = Color(1, 0.603922, 0.113725, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hazard")

@@ -10,4 +10,3 @@ func _ready() -> void:
 
 func _on_health_changed(health: int) -> void:
 	health_bar.value = health
-	print("Barra Actualizada: ", health)

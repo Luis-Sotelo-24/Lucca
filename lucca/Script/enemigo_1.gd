@@ -62,7 +62,6 @@ func _physics_process(delta):
 			if player == null:
 				state = State.PATROL
 			elif player_in_attack_range and can_attack and not is_attacking:
-				print(str(player_in_attack_range) + str(can_attack))
 				do_attack()
 				
 			else:
@@ -104,15 +103,13 @@ func do_attack():
 	for body in attack_area.get_overlapping_bodies():
 		if body.is_in_group("player") and body.has_method("take_damage"):
 			body.take_damage(damage)
-			print("Golpe! can_attack=", can_attack)
 			break
 
 func take_damage(amount: int):
 	if dead:
 		return
 	hp_enemy -= amount
-	print("Enemigo HP: ", hp_enemy)
-	# parpadeo rápido para feedback
+	modulate = Color(1.0, 0.5, 0.5)
 	anim.play("Daño")
 	await get_tree().create_timer(0.1).timeout
 	modulate = Color.WHITE
@@ -121,8 +118,6 @@ func take_damage(amount: int):
 
 func die():
 	dead = true
-	print("Enemigo muerto")
-	# detiene todo para que no siga pegando
 	set_physics_process(false)
 	anim.play("Morir") 
 	await get_tree().create_timer(0.5).timeout
@@ -140,7 +135,6 @@ func _on_detection_area_body_exited(body):
 		state = State.PATROL
 
 func _on_attack_area_body_entered(body):
-	print("El cuerpo está dentro del area de ataque")
 	if body.is_in_group("player"):
 		player_in_attack_range = true
 		if state != State.ATTACK:
@@ -152,8 +146,6 @@ func _on_attack_area_body_exited(body):
 
 func _on_attack_cooldown_timeout():
 	can_attack = true
-	print("Cooldown listo, puede volver a pegar")
-	# Rescate: si se quedó trabado en ATTACK, libéralo
 	if is_attacking:
 		is_attacking = false
 		if player != null:

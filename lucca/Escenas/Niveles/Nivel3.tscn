@@ -1,0 +1,188 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://Backgrounds/Caverna.png" id="1_cave"]
+[ext_resource type="PackedScene" path="res://Escenas/Lucca/Gato.tscn" id="2_cat"]
+[ext_resource type="PackedScene" path="res://Escenas/Hud/Barra de Vida.tscn" id="3_hud"]
+[ext_resource type="PackedScene" path="res://Escenas/Enemigos/Chef.tscn" id="4_chef"]
+[ext_resource type="PackedScene" path="res://Escenas/Consumibles/Comida.tscn" id="5_food"]
+[ext_resource type="PackedScene" path="res://Escenas/Objetos/Palanca.tscn" id="6_lever"]
+[ext_resource type="PackedScene" path="res://Escenas/Objetos/BarreraSalida.tscn" id="7_gate"]
+[ext_resource type="PackedScene" path="res://Escenas/Objetos/Checkpoint.tscn" id="8_checkpoint"]
+[ext_resource type="PackedScene" path="res://Escenas/Objetos/PortalNivel.tscn" id="9_portal"]
+[ext_resource type="PackedScene" path="res://Escenas/Enemigos/Enemigo1.tscn" id="10_enemy"]
+[ext_resource type="PackedScene" path="res://Escenas/Objetos/Peligro.tscn" id="11_hazard"]
+[ext_resource type="PackedScene" path="res://Escenas/Hud/Pausa.tscn" id="12_pause"]
+
+[sub_resource type="RectangleShape2D" id="Shape_floor"]
+size = Vector2(2550, 42)
+
+[sub_resource type="RectangleShape2D" id="Shape_counter"]
+size = Vector2(105, 112)
+
+[sub_resource type="RectangleShape2D" id="Shape_wall"]
+size = Vector2(40, 700)
+
+[node name="Nivel3" type="Node2D"]
+
+[node name="CocinaSubterranea" type="Node2D" parent="." groups=["background"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="CocinaSubterranea"]
+position = Vector2(-980, -590)
+centered = false
+scale = Vector2(1.12, 1.12)
+texture = ExtResource("1_cave")
+
+[node name="KitchenTint" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-980, -590, 1500, -590, 1500, 220, -980, 220)
+color = Color(0.109804, 0.0117647, 0.0196078, 0.38)
+
+[node name="Ceiling" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-980, -390, 1500, -390, 1500, -350, -980, -350)
+color = Color(0.160784, 0.054902, 0.0705882, 0.95)
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(260, 185)
+
+[node name="Tile" type="Polygon2D" parent="Floor"]
+polygon = PackedVector2Array(-1275, -21, 1275, -21, 1275, 21, -1275, 21)
+color = Color(0.184314, 0.0901961, 0.0823529, 1)
+
+[node name="Rim" type="Polygon2D" parent="Floor"]
+polygon = PackedVector2Array(-1275, -21, 1275, -21, 1275, -13, -1275, -13)
+color = Color(0.866667, 0.392157, 0.164706, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("Shape_floor")
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(-995, -160)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource("Shape_wall")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(1515, -160)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource("Shape_wall")
+
+[node name="CounterOne" type="StaticBody2D" parent="."]
+position = Vector2(-360, 110)
+
+[node name="Base" type="Polygon2D" parent="CounterOne"]
+polygon = PackedVector2Array(-53, 56, 53, 56, 53, -56, -53, -56)
+color = Color(0.254902, 0.105882, 0.0823529, 1)
+
+[node name="Top" type="Polygon2D" parent="CounterOne"]
+polygon = PackedVector2Array(-64, -56, 64, -56, 58, -43, -58, -43)
+color = Color(0.878431, 0.564706, 0.247059, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CounterOne"]
+shape = SubResource("Shape_counter")
+
+[node name="CounterTwo" type="StaticBody2D" parent="."]
+position = Vector2(250, 110)
+
+[node name="Base" type="Polygon2D" parent="CounterTwo"]
+polygon = PackedVector2Array(-53, 56, 53, 56, 53, -56, -53, -56)
+color = Color(0.254902, 0.105882, 0.0823529, 1)
+
+[node name="Top" type="Polygon2D" parent="CounterTwo"]
+polygon = PackedVector2Array(-64, -56, 64, -56, 58, -43, -58, -43)
+color = Color(0.878431, 0.564706, 0.247059, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CounterTwo"]
+shape = SubResource("Shape_counter")
+
+[node name="Oven" type="Node2D" parent="."]
+position = Vector2(560, 130)
+
+[node name="Body" type="Polygon2D" parent="Oven"]
+polygon = PackedVector2Array(-46, 12, 46, 12, 46, -100, -46, -100)
+color = Color(0.227451, 0.117647, 0.129412, 1)
+
+[node name="Fire" type="Polygon2D" parent="Oven"]
+polygon = PackedVector2Array(-24, -12, 24, -12, 20, -58, 0, -78, -20, -58)
+color = Color(1, 0.384314, 0.0901961, 0.9)
+
+[node name="Steam" type="Label" parent="Oven"]
+offset_left = -20.0
+offset_top = -135.0
+offset_right = 20.0
+offset_bottom = -100.0
+theme_override_colors/font_color = Color(1, 0.8, 0.8, 0.7)
+theme_override_font_sizes/font_size = 28
+text = "~"
+horizontal_alignment = 1
+
+[node name="Gato" parent="." instance=ExtResource("2_cat")]
+position = Vector2(-760, 130)
+
+[node name="BarraDeVida" parent="." instance=ExtResource("3_hud")]
+
+[node name="Chef" parent="." instance=ExtResource("4_chef")]
+position = Vector2(-1120, 130)
+notice_distance = 1800.0
+chase_speed = 138.0
+invulnerable = true
+
+[node name="GuardianUno" parent="." instance=ExtResource("10_enemy")]
+position = Vector2(-590, 130)
+
+[node name="GuardianDos" parent="." instance=ExtResource("10_enemy")]
+position = Vector2(80, 130)
+
+[node name="FoodOne" parent="." instance=ExtResource("5_food")]
+position = Vector2(-490, 130)
+
+[node name="FoodTwo" parent="." instance=ExtResource("5_food")]
+position = Vector2(160, 130)
+
+[node name="FuegoHorno" parent="." instance=ExtResource("11_hazard")]
+position = Vector2(560, 154)
+
+[node name="FuegoMesada" parent="." instance=ExtResource("11_hazard")]
+position = Vector2(-50, 154)
+
+[node name="PalancaUno" parent="." instance=ExtResource("6_lever")]
+position = Vector2(-100, 130)
+
+[node name="PalancaDos" parent="." instance=ExtResource("6_lever")]
+position = Vector2(430, 130)
+
+[node name="Checkpoint" parent="." instance=ExtResource("8_checkpoint")]
+position = Vector2(650, 130)
+
+[node name="Barrera" parent="." instance=ExtResource("7_gate")]
+position = Vector2(800, 165)
+
+[node name="Salida" parent="." instance=ExtResource("9_portal")]
+position = Vector2(1080, 130)
+target_scene = "res://Escenas/Menu/Final.tscn"
+prompt = "ESCAPAR DE LA COCINA"
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="Title" type="Label" parent="Interface"]
+offset_left = 34.0
+offset_top = 30.0
+offset_right = 620.0
+offset_bottom = 62.0
+theme_override_colors/font_color = Color(1, 0.682353, 0.396078, 1)
+theme_override_colors/font_outline_color = Color(0.117647, 0.027451, 0.0235294, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 23
+text = "NIVEL 3  ·  LA FUGA POR LA COCINA"
+
+[node name="Objective" type="Label" parent="Interface"]
+offset_left = 36.0
+offset_top = 68.0
+offset_right = 650.0
+offset_bottom = 94.0
+theme_override_colors/font_color = Color(1, 0.878431, 0.752941, 0.95)
+theme_override_colors/font_outline_color = Color(0.117647, 0.027451, 0.0235294, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 15
+text = "Activá las dos palancas y escapá antes de que el Chef te alcance."
+
+[node name="Pausa" parent="." instance=ExtResource("12_pause")]

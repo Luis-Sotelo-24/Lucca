@@ -1,0 +1,36 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Script/portal_nivel.gd" id="1_portal"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_portal"]
+size = Vector2(46, 76)
+
+[node name="PortalNivel" type="Area2D"]
+script = ExtResource("1_portal")
+
+[node name="OuterGlow" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-32, 0, -24, -58, 0, -78, 24, -58, 32, 0, 24, 18, -24, 18)
+color = Color(0.145098, 0.839216, 0.913725, 0.28)
+
+[node name="Gate" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-23, 0, -17, -51, 0, -66, 17, -51, 23, 0, 16, 12, -16, 12)
+color = Color(0.223529, 0.403922, 0.862745, 0.95)
+
+[node name="Core" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-10, 0, -8, -42, 0, -51, 8, -42, 10, 0)
+color = Color(0.560784, 0.94902, 1, 0.9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -28)
+shape = SubResource("RectangleShape2D_portal")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -110.0
+offset_top = 24.0
+offset_right = 110.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(0.682353, 0.952941, 1, 1)
+theme_override_colors/font_outline_color = Color(0.0196078, 0.0627451, 0.14902, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1

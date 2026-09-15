@@ -75,10 +75,8 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		if not floor_before:
 			var fall_height := global_position.y - min_y_in_air
-			print("Suelo:", global_position.y, " Pico:", min_y_in_air, " Caída:", fall_height)
 			if fall_height > safe_fall and not ataque:
 				var dmg := int((fall_height - safe_fall) * damage_per_px)
-				print("Daño por caída: ", dmg)
 				take_damage(dmg)
 		min_y_in_air = global_position.y
 		was_on_floor = true
@@ -110,7 +108,6 @@ func do_attack() -> void:
 	for body in attack_area.get_overlapping_bodies():
 		if body.is_in_group("enemy") and body.has_method("take_damage"):
 			body.take_damage(damage)
-			print("Le pegaste ", damage, " al enemigo")
 			break
 	
 	await get_tree().create_timer(attack_duration).timeout
@@ -148,22 +145,23 @@ func get_stats() -> Stats:
 func take_damage(amount: int) -> void:
 	stats.health -= amount
 	emit_signal("health_changed", stats.health)
-	print("Player recibió daño: ", amount, " | Vida actual: ", stats.health, "/", stats.max_health)
+	modulate = Color(1.0, 0.35, 0.35)
+	await get_tree().create_timer(0.12).timeout
 	if stats.health <= 0:
 		die()
-		
+		return
+	modulate = Color.WHITE
+
 func heal(amount: int) -> void:
 	if stats.health <= 0:
 		return
 	stats.health = min(stats.health + amount, stats.max_health)
 	health_changed.emit(stats.health)
-	print("Curado +", amount, " Vida:", stats.health, "/", stats.max_health)
 	modulate = Color(0.4, 1.0, 0.4)
 	await get_tree().create_timer(0.15).timeout
 	modulate = Color.WHITE
 
 func die() -> void:
-	print("Player murió - Respawn en: ", respawn_position)
 	global_position = respawn_position
 	velocity = Vector2.ZERO
 	stats.health = stats.max_health
