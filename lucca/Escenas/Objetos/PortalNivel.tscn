@@ -6,6 +6,7 @@
 size = Vector2(46, 76)
 
 [node name="PortalNivel" type="Area2D"]
+collision_mask = 4
 script = ExtResource("1_portal")
 
 [node name="OuterGlow" type="Polygon2D" parent="."]

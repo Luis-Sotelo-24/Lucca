@@ -136,6 +136,7 @@ shape = SubResource("Shape_platform_large")
 
 [node name="Gato" parent="." instance=ExtResource("2_cat")]
 position = Vector2(-730, 130)
+jump_velocity = -360.0
 
 [node name="BarraDeVida" parent="." instance=ExtResource("3_hud")]
 

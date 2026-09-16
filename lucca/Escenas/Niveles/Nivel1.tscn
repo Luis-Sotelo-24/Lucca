@@ -2794,9 +2794,6 @@ position = Vector2(-2098, -743)
 [node name="Enemigo2" parent="." unique_id=1131738798 instance=ExtResource("5_ltv3e")]
 position = Vector2(-2055, -337)
 
-[node name="Chef" parent="." instance=ExtResource("8_chef")]
-position = Vector2(-1810, -402)
-
 [node name="CheckpointBosque" parent="." instance=ExtResource("10_checkpoint")]
 position = Vector2(-2140, -743)
 
@@ -2807,6 +2804,28 @@ position = Vector2(-1740, -402)
 position = Vector2(-1510, -402)
 target_scene = "res://Escenas/Niveles/Nivel2.tscn"
 prompt = "ENTRAR A LA CAVERNA"
+
+[node name="MiniJefePerro" parent="." instance=ExtResource("5_ltv3e")]
+position = Vector2(-1650, -402)
+scale = Vector2(1.35, 1.35)
+patrol_speed = 35.0
+chase_speed = 85.0
+damage = 20
+max_hp_enemy = 150
+attack_windup = 0.65
+is_mini_boss = true
+
+[node name="AvisoGuardian" type="Label" parent="."]
+offset_left = -1750.0
+offset_top = -540.0
+offset_right = -1550.0
+offset_bottom = -500.0
+theme_override_colors/font_color = Color(1, 0.788235, 0.431373, 1)
+theme_override_colors/font_outline_color = Color(0.101961, 0.0431373, 0.0156863, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 17
+text = "GUARDIAN DEL PORTAL"
+horizontal_alignment = 1
 
 [node name="Comida" parent="." unique_id=904611366 instance=ExtResource("7_v2l7u")]
 position = Vector2(-1699, -402)

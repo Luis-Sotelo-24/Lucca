@@ -123,6 +123,8 @@ animations = [{
 size = Vector2(42, 62)
 
 [node name="Chef" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 2
+collision_mask = 1
 script = ExtResource("1_chef")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

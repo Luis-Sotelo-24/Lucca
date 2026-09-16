@@ -16,6 +16,7 @@ var defeated := false
 
 func _ready() -> void:
 	add_to_group("enemy")
+	animated_sprite.animation_finished.connect(_on_animation_finished)
 	animated_sprite.play("Idle")
 
 func _physics_process(delta: float) -> void:
@@ -39,11 +40,18 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
-	var direction: float = signf(player.global_position.x - global_position.x)
-	if abs(player.global_position.x - global_position.x) <= capture_distance and abs(player.global_position.y - global_position.y) < 65.0:
+	var horizontal_distance := player.global_position.x - global_position.x
+	if abs(horizontal_distance) <= capture_distance and abs(player.global_position.y - global_position.y) < 65.0:
 		_capture_player(player)
 		return
+	if abs(horizontal_distance) <= capture_distance:
+		velocity.x = 0.0
+		if animated_sprite.animation != "Idle":
+			animated_sprite.play("Idle")
+		move_and_slide()
+		return
 
+	var direction := signf(horizontal_distance)
 	velocity.x = direction * chase_speed
 	animated_sprite.flip_h = direction < 0.0
 	if animated_sprite.animation != "Walk":
@@ -62,6 +70,10 @@ func _capture_player(player: CharacterBody2D) -> void:
 	speech.visible = false
 	capturing = false
 	animated_sprite.play("Idle")
+
+func _on_animation_finished() -> void:
+	if animated_sprite.animation == "Strike" and not defeated:
+		animated_sprite.play("Idle")
 
 func take_damage(amount: int) -> void:
 	if defeated or invulnerable:

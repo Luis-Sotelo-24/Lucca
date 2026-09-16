@@ -6,6 +6,7 @@
 size = Vector2(68, 20)
 
 [node name="Peligro" type="Area2D"]
+collision_mask = 4
 script = ExtResource("1_hazard")
 
 [node name="Glow" type="Polygon2D" parent="."]

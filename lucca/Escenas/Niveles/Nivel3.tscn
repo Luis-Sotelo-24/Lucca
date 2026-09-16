@@ -134,9 +134,11 @@ position = Vector2(80, 130)
 
 [node name="FoodOne" parent="." instance=ExtResource("5_food")]
 position = Vector2(-490, 130)
+power = 2
 
 [node name="FoodTwo" parent="." instance=ExtResource("5_food")]
 position = Vector2(160, 130)
+power = 1
 
 [node name="FuegoHorno" parent="." instance=ExtResource("11_hazard")]
 position = Vector2(560, 154)

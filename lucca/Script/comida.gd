@@ -1,7 +1,11 @@
 extends Area2D
+
+enum Power { NONE, SUPER_JUMP, SUPER_SPEED }
+
 @export var heal_amount := 30
 @export var amplitude := 6.0
 @export var speed := 2.0
+@export var power: Power = Power.NONE
 
 @onready var spr: AnimatedSprite2D = $AnimatedSprite2D
 var base_y := 0.0
@@ -24,4 +28,6 @@ func _on_body_entered(body):
 			var st = body.get_stats()
 			st.health = min(st.health + heal_amount, st.max_health)
 			body.emit_signal("health_changed", st.health)
+		if power != Power.NONE and body.has_method("store_power"):
+			body.store_power(power)
 		queue_free()

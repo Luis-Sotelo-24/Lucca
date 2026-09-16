@@ -171,6 +171,8 @@ radius = 127.03543
 size = Vector2(56.625, 72)
 
 [node name="Enemigo1" type="CharacterBody2D" unique_id=742342464 groups=["enemy"]]
+collision_layer = 2
+collision_mask = 1
 script = ExtResource("1_up1vm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=860361907]
@@ -185,12 +187,14 @@ sprite_frames = SubResource("SpriteFrames_iadcy")
 animation = &"Morir"
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=1757706229]
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=596324452]
 shape = SubResource("CircleShape2D_qpqu3")
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=1036921238]
 position = Vector2(40, 0)
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=596625494]
 position = Vector2(1.6875, -1)

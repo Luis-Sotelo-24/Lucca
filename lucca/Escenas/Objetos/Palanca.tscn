@@ -6,6 +6,7 @@
 radius = 36.0
 
 [node name="Palanca" type="Area2D"]
+collision_mask = 4
 script = ExtResource("1_lever")
 
 [node name="Base" type="Polygon2D" parent="."]

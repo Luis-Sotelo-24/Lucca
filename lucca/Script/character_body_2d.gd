@@ -5,10 +5,15 @@ extends CharacterBody2D
 @export var respawn_position: Vector2
 @export var fall_death_y: float = 400
 @export var damage: int = 50
+@export var air_attack_damage: int = 75
 @export var attack_duration: float = 0.45
+@export var air_attack_speed: float = 420.0
 @export var max_jumps := 2
 @export var safe_fall := 200.0 
 @export var damage_per_px := 0.10
+@export var super_jump_velocity := -600.0
+@export var super_speed_multiplier := 2.0
+@export var super_speed_duration := 3.0
 
 
 @onready var animated_sprite: AnimatedSprite2D = $Jugador
@@ -16,17 +21,24 @@ extends CharacterBody2D
 @onready var attack_area: Area2D = $Area2D
 @onready var stats: Stats = Stats.new()
 @onready var camera: Camera2D = $Camera2D
+@onready var power_message: Label = $PowerHud/PowerMessage
 
 signal health_changed(health: int)
 
 enum State { SENTADO, CAMINAR, CORRER, SALTAR, CAER, ATACAR, MORIR }
+enum Power { NONE, SUPER_JUMP, SUPER_SPEED }
 var current_state: State = State.SENTADO
 var ataque: bool = false
+var air_attacking := false
 var can_attack := true
+var facing_direction := 1
 var base_attack_x := 0.0
 var jump_count := 0
 var was_on_floor := true
 var min_y_in_air := 0.0
+var stored_power: Power = Power.NONE
+var super_speed_active := false
+var power_message_version := 0
 
 func _ready() -> void:
 	add_to_group("player")
@@ -47,7 +59,13 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor() and not ataque:
 		jump_count = 0
 
-	if Input.is_action_just_pressed("Saltar") and not ataque:
+	var wants_super_jump := (Input.is_action_just_pressed("Saltar") or Input.is_action_just_pressed("Supersalto")) and stored_power == Power.SUPER_JUMP
+	if wants_super_jump and not ataque:
+		stored_power = Power.NONE
+		velocity.y = super_jump_velocity
+		jump_count = max_jumps
+		show_power_message("SUPERSALTO ACTIVADO")
+	elif Input.is_action_just_pressed("Saltar") and not ataque:
 		if jump_count < max_jumps:
 			velocity.y = jump_velocity
 			jump_count += 1
@@ -55,17 +73,26 @@ func _physics_process(delta: float) -> void:
 			if not is_on_floor():
 				current_state = State.SALTAR
 				play_once(animated_sprite, "Saltar")
+	if Input.is_action_just_pressed("Supervelocidad") and stored_power == Power.SUPER_SPEED and not ataque:
+		activate_super_speed()
 	
-	if Input.is_action_just_pressed("Ataque") and can_attack and is_on_floor():
-		do_attack()
+	if Input.is_action_just_pressed("Ataque") and can_attack:
+		if is_on_floor():
+			do_attack()
+		elif not ataque:
+			do_air_attack()
 	
 	var direction := Input.get_axis("Izquierda", "Derecha")
+	if direction != 0:
+		facing_direction = 1 if direction > 0 else -1
 	
-	# Bloqueado mientras ataca
+	# El zarpazo aéreo conserva su impulso; el ataque de suelo inmoviliza al gato.
 	if ataque:
-		velocity.x = 0
+		velocity.x = facing_direction * air_attack_speed if air_attacking else 0
 	else:
 		var cur_speed := 350.0 if Input.is_action_pressed("Correr") else 200.0
+		if super_speed_active:
+			cur_speed *= super_speed_multiplier
 		speed = cur_speed
 		velocity.x = direction * cur_speed
 	
@@ -92,29 +119,51 @@ func _physics_process(delta: float) -> void:
 	
 	update_state_movement(direction)
 	update_animation(direction)
-	update_camera_limits()
 
 func do_attack() -> void:
 	if not can_attack or ataque:
 		return
 	can_attack = false
 	ataque = true
+	air_attacking = false
 	velocity.x = 0
 	animated_sprite_ataque.visible = true
 	# No hacemos play aquí, lo hace update_animation una sola vez
 	
 	await get_tree().create_timer(0.2).timeout
-	# Daño al enemigo que esté en el área
-	for body in attack_area.get_overlapping_bodies():
-		if body.is_in_group("enemy") and body.has_method("take_damage"):
-			body.take_damage(damage)
-			break
+	damage_first_enemy(damage)
 	
 	await get_tree().create_timer(attack_duration).timeout
 	ataque = false
 	animated_sprite_ataque.visible = false
 	await get_tree().create_timer(0.2).timeout
 	can_attack = true
+
+func do_air_attack() -> void:
+	can_attack = false
+	ataque = true
+	air_attacking = true
+	velocity = Vector2(facing_direction * air_attack_speed, 120.0)
+	attack_area.position.x = base_attack_x * facing_direction
+	animated_sprite.flip_h = facing_direction < 0
+	animated_sprite_ataque.flip_h = facing_direction < 0
+	animated_sprite_ataque.visible = true
+
+	await get_tree().create_timer(0.12).timeout
+	damage_first_enemy(air_attack_damage)
+
+	await get_tree().create_timer(attack_duration).timeout
+	air_attacking = false
+	ataque = false
+	animated_sprite_ataque.visible = false
+	await get_tree().create_timer(0.2).timeout
+	can_attack = true
+
+func damage_first_enemy(amount: int) -> void:
+	for body in attack_area.get_overlapping_bodies():
+		if body.is_in_group("enemy") and body.has_method("take_damage"):
+			body.take_damage(amount)
+			break
 
 # --- resto igual que lo tuyo ---
 func setup_camera_limits() -> void:
@@ -124,25 +173,16 @@ func setup_camera_limits() -> void:
 		var texture = sprite.texture
 		if texture:
 			var bg_rect = Rect2(sprite.global_position, texture.get_size() * sprite.scale)
-			var camera_half = camera.get_viewport_rect().size * 0.5 / camera.zoom
-			var inset = camera_half / 3.0
-			camera.limit_left = bg_rect.position.x + inset.x
-			camera.limit_top = bg_rect.position.y + inset.y
-			camera.limit_right = bg_rect.end.x - inset.x
-			camera.limit_bottom = bg_rect.end.y - inset.y
-
-func update_camera_limits() -> void:
-	if camera.limit_right > camera.limit_left and camera.limit_bottom > camera.limit_top:
-		var camera_pos = camera.global_position
-		var camera_half = camera.get_viewport_rect().size * 0.5 / camera.zoom
-		camera_pos.x = clamp(camera_pos.x, camera.limit_left + camera_half.x, camera.limit_right - camera_half.x)
-		camera_pos.y = clamp(camera_pos.y, camera.limit_top + camera_half.y, camera.limit_bottom - camera_half.y)
-		camera.global_position = camera_pos
+			camera.limit_left = bg_rect.position.x
+			camera.limit_top = bg_rect.position.y
+			camera.limit_right = bg_rect.end.x
+			camera.limit_bottom = bg_rect.end.y
 
 func get_stats() -> Stats:
 	return stats
 
 func take_damage(amount: int) -> void:
+	clear_power()
 	stats.health -= amount
 	emit_signal("health_changed", stats.health)
 	modulate = Color(1.0, 0.35, 0.35)
@@ -166,11 +206,41 @@ func die() -> void:
 	velocity = Vector2.ZERO
 	stats.health = stats.max_health
 	ataque = false
+	air_attacking = false
 	can_attack = true
+	clear_power()
 	animated_sprite_ataque.visible = false
 	health_changed.emit(stats.health)
 	was_on_floor = true
 	min_y_in_air = respawn_position.y
+
+func store_power(power: Power) -> void:
+	stored_power = power
+	match power:
+		Power.SUPER_JUMP:
+			show_power_message("PODER OBTENIDO: SUPERSALTO (ESPACIO O K)")
+		Power.SUPER_SPEED:
+			show_power_message("PODER OBTENIDO: SUPER VELOCIDAD (L)")
+
+func activate_super_speed() -> void:
+	stored_power = Power.NONE
+	super_speed_active = true
+	show_power_message("SUPER VELOCIDAD ACTIVADA")
+	await get_tree().create_timer(super_speed_duration).timeout
+	super_speed_active = false
+
+func clear_power() -> void:
+	stored_power = Power.NONE
+	super_speed_active = false
+
+func show_power_message(message: String) -> void:
+	power_message_version += 1
+	var message_version := power_message_version
+	power_message.text = message
+	power_message.visible = true
+	await get_tree().create_timer(2.0).timeout
+	if message_version == power_message_version:
+		power_message.visible = false
 
 func update_state_movement(direction: float) -> void:
 	current_state = State.SENTADO
