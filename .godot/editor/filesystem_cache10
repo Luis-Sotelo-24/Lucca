@@ -1,0 +1,42 @@
+78098b89c88a74ebe8c20117b8754620
+::res://::1789330637
+icon.svg::CompressedTexture2D::3060288002501095535::1789248745::1789330331::1::::<><><>0<>0<>0e7c296fc5412610eb09433ddb6d0f19<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+::res://Backgrounds/::1789330331
+Background Bosque.png::CompressedTexture2D::1661189005844175297::1789248745::1789330331::1::::<><><>0<>0<>7461c8d14e44b8fa6958cdca07b00a5f<>res://.godot/imported/Background Bosque.png-4f9b21f34c978749bc9f8c4b71367ea6.ctex::
+::res://Escenas/::1789330432
+::res://Escenas/Enemigos/::1789248745
+Perro.tscn::PackedScene::8109583460421918750::1789248745::0::1::::<><><>0<>0<><>::uid://crji2eg3i637i::::res://Script/Enemigo.gd<>uid://dbgrp73rp8m5b::::res://Sprites/Perro 1.2.png
+::res://Escenas/Hud/::1789330331
+Barra de Vida.tscn::PackedScene::4660996187149469830::1789248745::0::1::::<><><>0<>0<><>::uid://devtirg27cbbq::::res://Script/barra_de_vida.gd<>uid://bxc600s68eqi2::::res://Escenas/Hud/HealthBar Empty.png<>uid://bjwqjwpvq1u6j::::res://Escenas/Hud/HealthBar Full.png
+HealthBar Empty.png::CompressedTexture2D::4006821056842354555::1789248745::1789330331::1::::<><><>0<>0<>9b713c7d101032c18ba8b6fd4a875fa1<>res://.godot/imported/HealthBar Empty.png-77ec121f6bfa96a5416b31ed110bf37e.ctex::
+HealthBar Full.png::CompressedTexture2D::3064525310716455847::1789248745::1789330331::1::::<><><>0<>0<>fd57cbb389c9b2296159de9dfb70d81f<>res://.godot/imported/HealthBar Full.png-daaaa21f3009ec37abea7c9c7713af10.ctex::
+::res://Escenas/Lucca/::1789329818
+Gato.tscn::PackedScene::117140565346968776::1789329818::0::1::::<><><>0<>0<><>::uid://bbdirsx6lgafr::::res://Script/character_body_2d.gd<>uid://crylal7xhk8bl::::res://Sprites/Gato 3.png<>uid://dycmqj2wiuifi::::res://Sprites/Gato 1.png<>uid://60qwfnktwrhp::::res://Sprites/Ataque.png
+Player.tscn::PackedScene::409751886201617561::1789248745::0::1::::<><><>0<>0<><>::uid://bbdirsx6lgafr::::res://Script/character_body_2d.gd<>uid://dycmqj2wiuifi::::res://Sprites/Gato 1.png<>uid://crylal7xhk8bl::::res://Sprites/Gato 3.png
+::res://Escenas/Menu/::1789330469
+MenuInicio.gd::GDScript::1142942210071521513::1789330460::0::1::::<>Control<><>0<>0<><>::
+MenuInicio.tscn::PackedScene::-1::1789330460::0::1::::<><><>0<>0<><>::res://Escenas/Menu/MenuInicio.gd
+::res://Escenas/Niveles/::1789248745
+Nivel1.tscn::PackedScene::6104541266466537984::1789248745::0::1::::<><><>0<>0<><>::uid://xwxsmq7d5d50::::res://Backgrounds/Background Bosque.png<>uid://ccp1jyqb4137a::::res://Tiles/Muros.png<>uid://bw0j16orl0dw::::res://Escenas/Lucca/Gato.tscn<>uid://b7n26qyigkfra::::res://Escenas/Hud/Barra de Vida.tscn<>uid://dnslwi6aj022e::::res://Escenas/Enemigos/Perro.tscn
+::res://Escenas/Objetos/::1789248745
+Arbol.tscn::PackedScene::532843347710489383::1789248745::0::1::::<><><>0<>0<><>::uid://rl1l4318g1eu::::res://Sprites/Arbol Animado.png
+::res://Escenas/UI/::1789248745
+HealthBar.tscn::PackedScene::12711176191197::1789248745::0::1::::<><><>0<>0<><>::res://Script/health_bar.gd
+::res://Script/::1789329818
+barra_de_vida.gd::GDScript::7484538171115867942::1789248745::0::1::::<>CanvasLayer<><>0<>0<><>::
+character_body_2d.gd::GDScript::2463319737406065723::1789329818::0::1::::<>CharacterBody2D<><>0<>0<><>::
+Enemigo.gd::GDScript::5985165282043216048::1789248745::0::1::::<>CharacterBody2D<><>0<>0<><>::
+health_bar.gd::GDScript::2088307393130984171::1789248745::0::1::::<>CanvasLayer<><>0<>0<><>::
+stats.gd::GDScript::6421682324769415579::1789248745::0::1::::Stats<>Resource<><>0<>0<><>::
+::res://Sprites/::1789330331
+Arbol Animado.png::CompressedTexture2D::1217518350343453956::1789248745::1789330331::1::::<><><>0<>0<>b0d49cf27b5e58e11ee7e3bf268471c9<>res://.godot/imported/Arbol Animado.png-aa1d70de569d5818654db8d670399e9f.ctex::
+Ataque.png::CompressedTexture2D::2228474639160506785::1789329818::1789330331::1::::<><><>0<>0<>fa4745ecf5812908376b9a5041d61b58<>res://.godot/imported/Ataque.png-e037bca9c13286fdd71722b815b9b415.ctex::
+Gato 1.png::CompressedTexture2D::8848680745946811890::1789248745::1789330331::1::::<><><>0<>0<>848d55e7b154a8cd05980d0624f37bc2<>res://.godot/imported/Gato 1.png-f1ac860c4ac4a64c03a4e7ec4c3491a9.ctex::
+Gato 2.png::CompressedTexture2D::3051162021258924307::1789248745::1789330331::1::::<><><>0<>0<>18c91ebdf1c50d15878d0be6a904833d<>res://.godot/imported/Gato 2.png-90f96e36906eaad4e0a7c2c2dfe6dc45.ctex::
+Gato 3.png::CompressedTexture2D::6016265290496011601::1789248745::1789330331::1::::<><><>0<>0<>189e8c90665a65eeb67c3ec206fd0b2a<>res://.godot/imported/Gato 3.png-a2ddbf0214e5db5830baefa9b567689f.ctex::
+Perro 1.2.png::CompressedTexture2D::7242897861822784965::1789248745::1789330331::1::::<><><>0<>0<>725ecfe768522964edad36bcb3b6deee<>res://.godot/imported/Perro 1.2.png-c0e9f7a7bb281aabf992c6de17d88adf.ctex::
+::res://Tiles/::1789330331
+Camino.png::CompressedTexture2D::2185056336356984775::1789248745::1789330331::1::::<><><>0<>0<>e9061189398cfdc0b33f080ee67918f8<>res://.godot/imported/Camino.png-150416149d6d0d761cd2d9698a16fa8e.ctex::
+Forest3.png::CompressedTexture2D::4697249363905538438::1789248745::1789330331::1::::<><><>0<>0<>d530dcfc72b4c753d2c763ae70c57548<>res://.godot/imported/Forest3.png-9562c551bdb287cacc36f4cd49a37760.ctex::
+gentle forest (48x48 resize) v01.png::CompressedTexture2D::3091382506186130991::1789248745::1789330331::1::::<><><>0<>0<>d34a66f79964c943a883ae109d232786<>res://.godot/imported/gentle forest (48x48 resize) v01.png-31495f92c312fcb05cc137259a64821c.ctex::
+Muros.png::CompressedTexture2D::4945780720292754288::1789248745::1789330331::1::::<><><>0<>0<>aa98b3585124e43995f3faa1a7bab9f4<>res://.godot/imported/Muros.png-6c0bc2922e3ab8c5d6feb785209cd584.ctex::

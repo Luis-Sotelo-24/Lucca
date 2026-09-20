@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://healthbar"]
+
+[ext_resource type="Script" path="res://Script/health_bar.gd" id="1_healthbar"]
+
+[node name="HealthBarUI" type="CanvasLayer" script=ExtResource("1_healthbar")]
+
+[node name="HealthBarContainer" type="HBoxContainer" parent="."]
+layout_mode = 3
+anchors_preset = 9
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 10.0
+offset_bottom = 10.0
+
+[node name="HealthBar" type="ProgressBar" parent="HealthBarContainer"]
+custom_minimum_size = Vector2(200, 20)
+min_value = 0.0
+max_value = 100.0
+value = 100.0
+
+[node name="HealthLabel" type="Label" parent="HealthBarContainer"]
+text = "100 / 100"
+horizontal_alignment = 1
+vertical_alignment = 1
