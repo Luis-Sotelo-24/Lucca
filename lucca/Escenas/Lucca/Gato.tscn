@@ -430,6 +430,8 @@ animations = [{
 size = Vector2(41.5, 19)
 
 [node name="Gato" type="CharacterBody2D" unique_id=1460887982 groups=["player"]]
+collision_layer = 4
+collision_mask = 1
 script = ExtResource("1_ba872")
 
 [node name="Colision Shape" type="CollisionShape2D" parent="." unique_id=1997453932]
@@ -447,8 +449,23 @@ animation = &"Esperar"
 position = Vector2(1, 0)
 zoom = Vector2(2, 2)
 
+[node name="PowerHud" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="PowerMessage" type="Label" parent="PowerHud"]
+offset_left = 24.0
+offset_top = 105.0
+offset_right = 480.0
+offset_bottom = 133.0
+theme_override_colors/font_color = Color(1, 0.917647, 0.396078, 1)
+theme_override_colors/font_outline_color = Color(0.117647, 0.027451, 0.0235294, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 18
+visible = false
+
 [node name="Area2D" type="Area2D" parent="." unique_id=422040283]
 position = Vector2(27, -10)
+collision_mask = 2
 
 [node name="Ataque" type="AnimatedSprite2D" parent="Area2D" unique_id=1379477538]
 position = Vector2(-1, 9.536743e-07)
