@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://crylal7xhk8bl" path="res://Sprites/Gato 3.png" id="2_6fja7"]
 [ext_resource type="Texture2D" uid="uid://dycmqj2wiuifi" path="res://Sprites/Gato 1.png" id="3_8dw11"]
 [ext_resource type="Texture2D" uid="uid://60qwfnktwrhp" path="res://Sprites/Ataque.png" id="4_6fja7"]
+[ext_resource type="Texture2D" uid="uid://0dla0tka57yu" path="res://Escenas/Lucca/luz.tres" id="5_8dw11"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6fja7"]
 size = Vector2(13.333334, 30)
@@ -279,7 +280,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"Correr Derecha",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -427,12 +428,19 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qpqu3"]
-size = Vector2(41.5, 19)
+size = Vector2(41.5, 24.5)
 
 [node name="Gato" type="CharacterBody2D" unique_id=1460887982 groups=["player"]]
 collision_layer = 4
-collision_mask = 1
 script = ExtResource("1_ba872")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1463690589]
+position = Vector2(1, -12)
+scale = Vector2(4, 4)
+color = Color(1, 0.8877992, 0.55667746, 0.9882353)
+shadow_enabled = true
+shadow_filter = 1
+texture = ExtResource("5_8dw11")
 
 [node name="Colision Shape" type="CollisionShape2D" parent="." unique_id=1997453932]
 position = Vector2(0.99999976, -12)
@@ -443,38 +451,25 @@ shape = SubResource("RectangleShape2D_6fja7")
 [node name="Jugador" type="AnimatedSprite2D" parent="." unique_id=1134769079]
 position = Vector2(1, -15)
 sprite_frames = SubResource("SpriteFrames_ainjh")
-animation = &"Esperar"
+animation = &"Correr Derecha"
+frame_progress = 0.22801818
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=408934267]
 position = Vector2(1, 0)
 zoom = Vector2(2, 2)
-
-[node name="PowerHud" type="CanvasLayer" parent="."]
-layer = 2
-
-[node name="PowerMessage" type="Label" parent="PowerHud"]
-offset_left = 24.0
-offset_top = 105.0
-offset_right = 480.0
-offset_bottom = 133.0
-theme_override_colors/font_color = Color(1, 0.917647, 0.396078, 1)
-theme_override_colors/font_outline_color = Color(0.117647, 0.027451, 0.0235294, 1)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 18
-visible = false
 
 [node name="Area2D" type="Area2D" parent="." unique_id=422040283]
 position = Vector2(27, -10)
 collision_mask = 2
 
 [node name="Ataque" type="AnimatedSprite2D" parent="Area2D" unique_id=1379477538]
-position = Vector2(-1, 9.536743e-07)
-scale = Vector2(0.49657542, 0.86904764)
+position = Vector2(-1, -2.9374988)
+scale = Vector2(0.49657542, 1.1488096)
 sprite_frames = SubResource("SpriteFrames_qpqu3")
 animation = &"Garra 1"
 frame = 7
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1552529953]
-position = Vector2(-1, 0)
+position = Vector2(-1, -2.75)
 shape = SubResource("RectangleShape2D_qpqu3")

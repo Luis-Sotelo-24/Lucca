@@ -123,6 +123,8 @@ func take_damage(amount: int):
 func die():
 	dead = true
 	set_physics_process(false)
+	print("Enemigo murió")
+	GameManager.on_enemy_killed()
 	anim.play("Morir") 
 	await get_tree().create_timer(0.5).timeout
 	queue_free()

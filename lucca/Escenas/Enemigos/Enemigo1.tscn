@@ -168,17 +168,18 @@ animations = [{
 radius = 127.03543
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iadcy"]
-size = Vector2(56.625, 72)
+size = Vector2(23.625, 72)
 
 [node name="Enemigo1" type="CharacterBody2D" unique_id=742342464 groups=["enemy"]]
 collision_layer = 2
-collision_mask = 1
+platform_wall_layers = 1
 script = ExtResource("1_up1vm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=860361907]
 position = Vector2(-1, -5)
 scale = Vector2(2, 1)
 shape = SubResource("RectangleShape2D_b023l")
+debug_color = Color(0.49202222, 0.5834097, 0.071548454, 0.41960785)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1049834443]
 position = Vector2(2.0000014, -8)
@@ -197,7 +198,7 @@ position = Vector2(40, 0)
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=596625494]
-position = Vector2(1.6875, -1)
+position = Vector2(-14.8125, -1)
 shape = SubResource("RectangleShape2D_iadcy")
 
 [node name="AttackCooldown" type="Timer" parent="." unique_id=25567159]

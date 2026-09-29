@@ -7,7 +7,6 @@ extends CharacterBody2D
 @export var damage: int = 50
 @export var air_attack_damage: int = 75
 @export var attack_duration: float = 0.45
-@export var air_attack_speed: float = 420.0
 @export var max_jumps := 2
 @export var safe_fall := 200.0 
 @export var damage_per_px := 0.10
@@ -21,7 +20,7 @@ extends CharacterBody2D
 @onready var attack_area: Area2D = $Area2D
 @onready var stats: Stats = Stats.new()
 @onready var camera: Camera2D = $Camera2D
-@onready var power_message: Label = $PowerHud/PowerMessage
+@onready var canvas_mod: CanvasModulate = get_tree().get_first_node_in_group("canvas_mod")
 
 signal health_changed(health: int)
 
@@ -51,6 +50,12 @@ func _ready() -> void:
 	min_y_in_air = global_position.y
 	was_on_floor = true
 	setup_camera_limits()
+	GameManager.enemy_killed.connect(_on_enemy_killed)
+	if canvas_mod:
+		var c := canvas_mod.color
+		self_modulate = Color(1.0 / c.r, 1.0 / c.g, 1.0 / c.b, 1.0)
+		print("Compensando oscuridad: ", self_modulate)
+
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -58,23 +63,11 @@ func _physics_process(delta: float) -> void:
 
 	if is_on_floor() and not ataque:
 		jump_count = 0
-
-	var wants_super_jump := (Input.is_action_just_pressed("Saltar") or Input.is_action_just_pressed("Supersalto")) and stored_power == Power.SUPER_JUMP
-	if wants_super_jump and not ataque:
-		stored_power = Power.NONE
-		velocity.y = super_jump_velocity
-		jump_count = max_jumps
-		show_power_message("SUPERSALTO ACTIVADO")
-	elif Input.is_action_just_pressed("Saltar") and not ataque:
+	
+	if Input.is_action_just_pressed("Saltar") and not ataque:
 		if jump_count < max_jumps:
 			velocity.y = jump_velocity
 			jump_count += 1
-			# fuerza anim de salto en el segundo salto
-			if not is_on_floor():
-				current_state = State.SALTAR
-				play_once(animated_sprite, "Saltar")
-	if Input.is_action_just_pressed("Supervelocidad") and stored_power == Power.SUPER_SPEED and not ataque:
-		activate_super_speed()
 	
 	if Input.is_action_just_pressed("Ataque") and can_attack:
 		if is_on_floor():
@@ -86,9 +79,8 @@ func _physics_process(delta: float) -> void:
 	if direction != 0:
 		facing_direction = 1 if direction > 0 else -1
 	
-	# El zarpazo aéreo conserva su impulso; el ataque de suelo inmoviliza al gato.
 	if ataque:
-		velocity.x = facing_direction * air_attack_speed if air_attacking else 0
+		velocity.x = facing_direction if air_attacking else 0
 	else:
 		var cur_speed := 350.0 if Input.is_action_pressed("Correr") else 200.0
 		if super_speed_active:
@@ -143,10 +135,6 @@ func do_air_attack() -> void:
 	can_attack = false
 	ataque = true
 	air_attacking = true
-	velocity = Vector2(facing_direction * air_attack_speed, 120.0)
-	attack_area.position.x = base_attack_x * facing_direction
-	animated_sprite.flip_h = facing_direction < 0
-	animated_sprite_ataque.flip_h = facing_direction < 0
 	animated_sprite_ataque.visible = true
 
 	await get_tree().create_timer(0.12).timeout
@@ -214,33 +202,9 @@ func die() -> void:
 	was_on_floor = true
 	min_y_in_air = respawn_position.y
 
-func store_power(power: Power) -> void:
-	stored_power = power
-	match power:
-		Power.SUPER_JUMP:
-			show_power_message("PODER OBTENIDO: SUPERSALTO (ESPACIO O K)")
-		Power.SUPER_SPEED:
-			show_power_message("PODER OBTENIDO: SUPER VELOCIDAD (L)")
-
-func activate_super_speed() -> void:
-	stored_power = Power.NONE
-	super_speed_active = true
-	show_power_message("SUPER VELOCIDAD ACTIVADA")
-	await get_tree().create_timer(super_speed_duration).timeout
-	super_speed_active = false
-
 func clear_power() -> void:
 	stored_power = Power.NONE
 	super_speed_active = false
-
-func show_power_message(message: String) -> void:
-	power_message_version += 1
-	var message_version := power_message_version
-	power_message.text = message
-	power_message.visible = true
-	await get_tree().create_timer(2.0).timeout
-	if message_version == power_message_version:
-		power_message.visible = false
 
 func update_state_movement(direction: float) -> void:
 	current_state = State.SENTADO
@@ -286,3 +250,8 @@ func update_animation(direction: float) -> void:
 		animated_sprite.flip_h = false
 		animated_sprite_ataque.flip_h = false
 		attack_area.position.x = base_attack_x
+		
+func _on_enemy_killed(total: int) -> void:
+	if total >= GameManager.needed_to_win:
+		print("¡Se desbloquea la puerta!")
+		

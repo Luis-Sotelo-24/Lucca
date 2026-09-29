@@ -23,9 +23,9 @@ func _animate_menu() -> void:
 	hero_tween.tween_property(hero, "position:y", hero.position.y, 2.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 func _on_start_button_pressed() -> void:
+	GameManager.kills = 0
 	if is_starting or not ResourceLoader.exists(LEVEL_PATH):
 		return
-
 	is_starting = true
 	start_button.disabled = true
 	var tween := create_tween()
