@@ -99,6 +99,7 @@ func do_attack():
 	is_attacking = true
 	state = State.ATTACK
 	velocity.x = 0
+	AudioDirector.play_dog_attack()
 	anim.play("Atacar")
 	cooldown.start()
 	

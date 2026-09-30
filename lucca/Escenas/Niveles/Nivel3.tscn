@@ -117,6 +117,7 @@ horizontal_alignment = 1
 
 [node name="Gato" parent="." instance=ExtResource("2_cat")]
 position = Vector2(-760, 130)
+jump_velocity = -420.0
 
 [node name="BarraDeVida" parent="." instance=ExtResource("3_hud")]
 
@@ -134,11 +135,14 @@ position = Vector2(80, 130)
 
 [node name="FoodOne" parent="." instance=ExtResource("5_food")]
 position = Vector2(-490, 130)
-power = 2
+food_type = 2
 
 [node name="FoodTwo" parent="." instance=ExtResource("5_food")]
 position = Vector2(160, 130)
-power = 1
+food_type = 1
+
+[node name="FoodThree" parent="." instance=ExtResource("5_food")]
+position = Vector2(330, 130)
 
 [node name="FuegoHorno" parent="." instance=ExtResource("11_hazard")]
 position = Vector2(560, 154)

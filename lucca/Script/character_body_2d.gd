@@ -22,8 +22,6 @@ extends CharacterBody2D
 @onready var camera: Camera2D = $Camera2D
 @onready var canvas_mod: CanvasModulate = get_tree().get_first_node_in_group("canvas_mod")
 
-signal health_changed(health: int)
-
 enum State { SENTADO, CAMINAR, CORRER, SALTAR, CAER, ATACAR, MORIR }
 enum Power { NONE, SUPER_JUMP, SUPER_SPEED }
 var current_state: State = State.SENTADO
@@ -38,6 +36,9 @@ var min_y_in_air := 0.0
 var stored_power: Power = Power.NONE
 var super_speed_active := false
 var power_message_version := 0
+var food_count := 0
+var super_strength_ready := false
+var power_label: Label
 
 func _ready() -> void:
 	add_to_group("player")
@@ -50,6 +51,7 @@ func _ready() -> void:
 	min_y_in_air = global_position.y
 	was_on_floor = true
 	setup_camera_limits()
+	_setup_power_label()
 	GameManager.enemy_killed.connect(_on_enemy_killed)
 	if canvas_mod:
 		var c := canvas_mod.color
@@ -68,12 +70,15 @@ func _physics_process(delta: float) -> void:
 		if jump_count < max_jumps:
 			velocity.y = jump_velocity
 			jump_count += 1
+			AudioDirector.play_jump()
 	
 	if Input.is_action_just_pressed("Ataque") and can_attack:
 		if is_on_floor():
 			do_attack()
 		elif not ataque:
 			do_air_attack()
+	if Input.is_action_just_pressed("Supervelocidad") and super_strength_ready and not ataque:
+		do_super_strength()
 	
 	var direction := Input.get_axis("Izquierda", "Derecha")
 	if direction != 0:
@@ -96,7 +101,7 @@ func _physics_process(delta: float) -> void:
 			var fall_height := global_position.y - min_y_in_air
 			if fall_height > safe_fall and not ataque:
 				var dmg := int((fall_height - safe_fall) * damage_per_px)
-				take_damage(dmg)
+				take_damage(dmg, true)
 		min_y_in_air = global_position.y
 		was_on_floor = true
 	else:
@@ -107,7 +112,7 @@ func _physics_process(delta: float) -> void:
 		was_on_floor = false
 
 	if global_position.y > fall_death_y:        
-		take_damage(stats.max_health)
+		take_damage(stats.max_health, true)
 	
 	update_state_movement(direction)
 	update_animation(direction)
@@ -119,11 +124,12 @@ func do_attack() -> void:
 	ataque = true
 	air_attacking = false
 	velocity.x = 0
+	AudioDirector.play_cat_attack()
 	animated_sprite_ataque.visible = true
 	# No hacemos play aquí, lo hace update_animation una sola vez
 	
 	await get_tree().create_timer(0.2).timeout
-	damage_first_enemy(damage)
+	_apply_attack_damage(damage)
 	
 	await get_tree().create_timer(attack_duration).timeout
 	ataque = false
@@ -135,10 +141,11 @@ func do_air_attack() -> void:
 	can_attack = false
 	ataque = true
 	air_attacking = true
+	AudioDirector.play_cat_attack()
 	animated_sprite_ataque.visible = true
 
 	await get_tree().create_timer(0.12).timeout
-	damage_first_enemy(air_attack_damage)
+	_apply_attack_damage(air_attack_damage)
 
 	await get_tree().create_timer(attack_duration).timeout
 	air_attacking = false
@@ -147,11 +154,37 @@ func do_air_attack() -> void:
 	await get_tree().create_timer(0.2).timeout
 	can_attack = true
 
-func damage_first_enemy(amount: int) -> void:
+func do_super_strength() -> void:
+	if not can_attack or ataque:
+		return
+	if not damage_first_enemy(damage * 3):
+		_update_power_label("ACERCATE A UN ENEMIGO Y PRESIONA L")
+		return
+
+	super_strength_ready = false
+	food_count = 0
+	can_attack = false
+	ataque = true
+	air_attacking = false
+	velocity.x = 0
+	AudioDirector.play_super_strength()
+	animated_sprite_ataque.visible = true
+	_update_power_label()
+	await get_tree().create_timer(attack_duration).timeout
+	ataque = false
+	animated_sprite_ataque.visible = false
+	await get_tree().create_timer(0.2).timeout
+	can_attack = true
+
+func _apply_attack_damage(base_damage: int) -> void:
+	damage_first_enemy(base_damage)
+
+func damage_first_enemy(amount: int) -> bool:
 	for body in attack_area.get_overlapping_bodies():
 		if body.is_in_group("enemy") and body.has_method("take_damage"):
 			body.take_damage(amount)
-			break
+			return true
+	return false
 
 # --- resto igual que lo tuyo ---
 func setup_camera_limits() -> void:
@@ -169,10 +202,11 @@ func setup_camera_limits() -> void:
 func get_stats() -> Stats:
 	return stats
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, is_fall_damage := false) -> void:
 	clear_power()
-	stats.health -= amount
-	emit_signal("health_changed", stats.health)
+	stats.take_damage(amount)
+	if is_fall_damage:
+		AudioDirector.play_fall_damage()
 	modulate = Color(1.0, 0.35, 0.35)
 	await get_tree().create_timer(0.12).timeout
 	if stats.health <= 0:
@@ -183,8 +217,7 @@ func take_damage(amount: int) -> void:
 func heal(amount: int) -> void:
 	if stats.health <= 0:
 		return
-	stats.health = min(stats.health + amount, stats.max_health)
-	health_changed.emit(stats.health)
+	stats.heal(amount)
 	modulate = Color(0.4, 1.0, 0.4)
 	await get_tree().create_timer(0.15).timeout
 	modulate = Color.WHITE
@@ -192,19 +225,46 @@ func heal(amount: int) -> void:
 func die() -> void:
 	global_position = respawn_position
 	velocity = Vector2.ZERO
-	stats.health = stats.max_health
+	stats.reset()
 	ataque = false
 	air_attacking = false
 	can_attack = true
 	clear_power()
 	animated_sprite_ataque.visible = false
-	health_changed.emit(stats.health)
 	was_on_floor = true
 	min_y_in_air = respawn_position.y
 
 func clear_power() -> void:
 	stored_power = Power.NONE
 	super_speed_active = false
+
+func collect_food() -> void:
+	if super_strength_ready:
+		_update_power_label()
+		return
+	food_count += 1
+	if food_count >= 3:
+		food_count = 3
+		super_strength_ready = true
+		_update_power_label("SUPERFUERZA LISTA: PRESIONA L")
+		return
+	_update_power_label()
+
+func _setup_power_label() -> void:
+	var hud := CanvasLayer.new()
+	hud.layer = 3
+	add_child(hud)
+	power_label = Label.new()
+	power_label.position = Vector2(34, 108)
+	power_label.add_theme_font_size_override("font_size", 16)
+	power_label.add_theme_color_override("font_color", Color(1.0, 0.9, 0.55))
+	hud.add_child(power_label)
+	_update_power_label("J: ATACAR  |  COMIDAS: 0/3")
+
+func _update_power_label(message := "") -> void:
+	if message.is_empty():
+		message = "COMIDAS: %d/3" % food_count
+	power_label.text = message
 
 func update_state_movement(direction: float) -> void:
 	current_state = State.SENTADO

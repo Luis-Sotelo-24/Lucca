@@ -237,7 +237,13 @@ text = "A / D   Moverse        SHIFT   Correr"
 layout_mode = 2
 theme_override_colors/font_color = Color(0.886275, 0.941176, 0.847059, 1)
 theme_override_font_sizes/font_size = 15
-text = "ESPACIO   Saltar        CLICK   Atacar"
+text = "ESPACIO   Saltar        J   Atacar"
+
+[node name="Power" type="Label" parent="Content/MenuCard/Margin/Stack/Controls/Margin/Rows"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.886275, 0.941176, 0.847059, 1)
+theme_override_font_sizes/font_size = 14
+text = "L   Activar superfuerza (tras 3 comidas)"
 
 [node name="Hint" type="Label" parent="Content/MenuCard/Margin/Stack" unique_id=1050625243]
 layout_mode = 2
