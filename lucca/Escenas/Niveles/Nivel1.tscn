@@ -2834,6 +2834,11 @@ position = Vector2(-1699, -402)
 
 [node name="Comida2" parent="." unique_id=1138814547 instance=ExtResource("7_v2l7u")]
 position = Vector2(-1596, -458)
+food_type = 1
+
+[node name="Comida3" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(-1495, -402)
+food_type = 2
 
 [node name="Pausa" parent="." unique_id=1517533565 instance=ExtResource("11_pause")]
 
@@ -2845,3 +2850,4 @@ max_hp_enemy = 100
 
 [node name="PortalNivel" parent="." unique_id=1062117629 instance=ExtResource("9_4uwuv")]
 position = Vector2(2214, -97)
+target_scene = "res://Escenas/Niveles/Nivel2.tscn"
