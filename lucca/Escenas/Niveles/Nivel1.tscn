@@ -9,10 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://clabbpdswk78c" path="res://Escenas/Consumibles/Comida.tscn" id="7_v2l7u"]
 [ext_resource type="PackedScene" path="res://Escenas/Objetos/PortalNivel.tscn" id="9_4uwuv"]
 [ext_resource type="PackedScene" uid="uid://dckvcnguro7bc" path="res://Escenas/Hud/Pausa.tscn" id="11_pause"]
-
-[sub_resource type="GDScript" id="GDScript_heb5a"]
-script/source = "extends Node2D
-"
+[ext_resource type="Script" path="res://Script/nivel.gd" id="12_level"]
+[ext_resource type="PackedScene" path="res://Escenas/Objetos/Plataforma.tscn" id="13_platform"]
+[ext_resource type="PackedScene" path="res://Escenas/Objetos/Checkpoint.tscn" id="14_checkpoint"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_iadcy"]
 
@@ -2794,7 +2793,8 @@ sources/0 = SubResource("TileSetAtlasSource_b023l")
 
 [node name="Bosque" type="Node2D" unique_id=1300735560]
 oversampling_with_scale = 1
-script = SubResource("GDScript_heb5a")
+script = ExtResource("12_level")
+camera_bounds = Rect2(-2380, -1410, 4780, 1780)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1506182344 groups=["canvas_mod"]]
 visible = false
@@ -2818,36 +2818,242 @@ tile_map_data = PackedByteArray("AADW/mH/AAABACkAAADW/mL/AAABACoAAADW/mP/AAABACs
 tile_set = SubResource("TileSet_qpqu3")
 
 [node name="Gato" parent="." unique_id=1460887982 instance=ExtResource("3_ltv3e")]
-position = Vector2(1457, -129)
+position = Vector2(-2260, -350)
 scale = Vector2(1.0000001, 1)
 
 [node name="BarraDeVida" parent="." unique_id=1332243261 instance=ExtResource("4_ltv3e")]
 
 [node name="Enemigo1" parent="." unique_id=742342464 instance=ExtResource("5_ltv3e")]
-position = Vector2(-2098, -743)
+position = Vector2(-2040, -345)
 
 [node name="Enemigo2" parent="." unique_id=1131738798 instance=ExtResource("5_ltv3e")]
-position = Vector2(-2055, -337)
+position = Vector2(-1480, -535)
 
 [node name="Comida" parent="." unique_id=904611366 instance=ExtResource("7_v2l7u")]
-position = Vector2(-1699, -402)
+position = Vector2(-2180, -353)
+food_type = 1
 
 [node name="Comida2" parent="." unique_id=1138814547 instance=ExtResource("7_v2l7u")]
-position = Vector2(-1596, -458)
+position = Vector2(-1800, -353)
 food_type = 1
 
 [node name="Comida3" parent="." instance=ExtResource("7_v2l7u")]
-position = Vector2(-1495, -402)
+position = Vector2(-1110, -481)
 food_type = 2
 
 [node name="Pausa" parent="." unique_id=1517533565 instance=ExtResource("11_pause")]
 
 [node name="Enemigo3" parent="." unique_id=337822970 instance=ExtResource("5_ltv3e")]
-position = Vector2(1807.0001, -1157)
-scale = Vector2(3, 3)
+position = Vector2(1807, -115)
+scale = Vector2(1.35, 1.35)
 damage = 20
 max_hp_enemy = 100
 
 [node name="PortalNivel" parent="." unique_id=1062117629 instance=ExtResource("9_4uwuv")]
 position = Vector2(2214, -97)
 target_scene = "res://Escenas/Niveles/Nivel2.tscn"
+
+[node name="BridgeStep" parent="." instance=ExtResource("13_platform")]
+position = Vector2(-970, -128)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="ClimbStep" parent="." instance=ExtResource("13_platform")]
+position = Vector2(-180, -223)
+size = Vector2(140, 24)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="DescentStep" parent="." instance=ExtResource("13_platform")]
+position = Vector2(900, -128)
+size = Vector2(100, 24)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="CheckpointBosque" parent="." instance=ExtResource("14_checkpoint")]
+position = Vector2(-1310, -563)
+
+[node name="CheckpointClaros" parent="." instance=ExtResource("14_checkpoint")]
+position = Vector2(-500, -166)
+
+[node name="CheckpointGuardian" parent="." instance=ExtResource("14_checkpoint")]
+position = Vector2(1140, -78)
+
+[node name="GuardianClaros" parent="." instance=ExtResource("5_ltv3e")]
+position = Vector2(-650, -190)
+
+[node name="GuardianMirador" parent="." instance=ExtResource("5_ltv3e")]
+position = Vector2(100, -335)
+
+[node name="GuardianPuente" parent="." instance=ExtResource("5_ltv3e")]
+position = Vector2(660, -220)
+
+[node name="GuardianSendero" parent="." instance=ExtResource("5_ltv3e")]
+position = Vector2(1390, -105)
+
+[node name="Apple01" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(-1960, -353)
+food_type = 1
+
+[node name="Apple02" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(-1700, -430)
+food_type = 1
+
+[node name="Apple03" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(-1480, -540)
+food_type = 1
+
+[node name="Apple04" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(-960, -430)
+food_type = 1
+
+[node name="Apple05" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(-790, -365)
+food_type = 1
+
+[node name="Apple06" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(-600, -290)
+food_type = 1
+
+[node name="Apple07" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(-180, -265)
+food_type = 1
+
+[node name="Apple08" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(100, -337)
+food_type = 1
+
+[node name="Apple09" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(570, -225)
+food_type = 1
+
+[node name="Apple10" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(770, -225)
+food_type = 1
+
+[node name="Apple11" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(900, -170)
+food_type = 1
+
+[node name="Apple12" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(1200, -105)
+food_type = 1
+
+[node name="Apple13" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(1550, -105)
+food_type = 1
+
+[node name="Apple14" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(1990, -105)
+food_type = 1
+
+[node name="Apple15" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(2120, -105)
+food_type = 1
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="Title" type="Label" parent="Interface"]
+offset_left = 34.0
+offset_top = 30.0
+theme_override_font_sizes/font_size = 23
+theme_override_colors/font_color = Color(0.8, 1, 0.65, 1)
+theme_override_colors/font_outline_color = Color(0.04, 0.08, 0.03, 1)
+theme_override_constants/outline_size = 5
+text = "NIVEL 1 · EL SENDERO DEL BOSQUE"
+
+[node name="Objective" type="Label" parent="Interface"]
+offset_left = 36.0
+offset_top = 68.0
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_outline_color = Color(0.04, 0.08, 0.03, 1)
+theme_override_constants/outline_size = 3
+text = "Sigue las frutas hasta la caverna. ESPACIO dos veces: doble salto."
+
+[node name="OrchardStep1" parent="." instance=ExtResource("13_platform")]
+position = Vector2(-1700, -388)
+size = Vector2(160, 24)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="OrchardStep2" parent="." instance=ExtResource("13_platform")]
+position = Vector2(-1590, -448)
+size = Vector2(140, 24)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="OrchardStep3" parent="." instance=ExtResource("13_platform")]
+position = Vector2(-1480, -498)
+size = Vector2(140, 24)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="OrchardSummit" parent="." instance=ExtResource("13_platform")]
+position = Vector2(-1310, -548)
+size = Vector2(180, 24)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="UpperDescent1" parent="." instance=ExtResource("13_platform")]
+position = Vector2(-960, -388)
+size = Vector2(160, 24)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="UpperDescent2" parent="." instance=ExtResource("13_platform")]
+position = Vector2(-790, -323)
+size = Vector2(140, 24)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="UpperDescent3" parent="." instance=ExtResource("13_platform")]
+position = Vector2(-600, -248)
+size = Vector2(160, 24)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="RecoveryStep1" parent="." instance=ExtResource("13_platform")]
+position = Vector2(-1570, -178)
+size = Vector2(140, 24)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="RecoveryStep2" parent="." instance=ExtResource("13_platform")]
+position = Vector2(-1440, -258)
+size = Vector2(140, 24)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="RecoveryStep3" parent="." instance=ExtResource("13_platform")]
+position = Vector2(-1310, -338)
+size = Vector2(140, 24)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="RecoveryStep4" parent="." instance=ExtResource("13_platform")]
+position = Vector2(-1230, -418)
+size = Vector2(140, 24)
+rock_color = Color(0.18, 0.25, 0.14, 1)
+rim_color = Color(0.53, 0.74, 0.28, 1)
+one_way = true
+
+[node name="Apple16" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(-1590, -490)
+food_type = 1
+
+[node name="Apple17" parent="." instance=ExtResource("7_v2l7u")]
+position = Vector2(-1310, -590)
+food_type = 1
