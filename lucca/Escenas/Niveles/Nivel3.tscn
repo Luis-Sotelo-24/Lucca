@@ -12,9 +12,11 @@
 [ext_resource type="PackedScene" path="res://Escenas/Enemigos/Enemigo1.tscn" id="10_enemy"]
 [ext_resource type="PackedScene" path="res://Escenas/Objetos/Peligro.tscn" id="11_hazard"]
 [ext_resource type="PackedScene" path="res://Escenas/Hud/Pausa.tscn" id="12_pause"]
+[ext_resource type="Script" path="res://Script/nivel.gd" id="13_level"]
+[ext_resource type="PackedScene" path="res://Escenas/Objetos/Plataforma.tscn" id="14_platform"]
 
 [sub_resource type="RectangleShape2D" id="Shape_floor"]
-size = Vector2(2550, 42)
+size = Vector2(6200, 42)
 
 [sub_resource type="RectangleShape2D" id="Shape_counter"]
 size = Vector2(105, 112)
@@ -23,6 +25,8 @@ size = Vector2(105, 112)
 size = Vector2(40, 700)
 
 [node name="Nivel3" type="Node2D"]
+script = ExtResource("13_level")
+camera_bounds = Rect2(-975, -590, 6160, 810)
 
 [node name="CocinaSubterranea" type="Node2D" parent="." groups=["background"]]
 
@@ -32,23 +36,35 @@ centered = false
 scale = Vector2(1.12, 1.12)
 texture = ExtResource("1_cave")
 
+[node name="BackgroundMiddle" type="Sprite2D" parent="CocinaSubterranea"]
+position = Vector2(1452, -590)
+centered = false
+scale = Vector2(1.12, 1.12)
+texture = ExtResource("1_cave")
+
+[node name="BackgroundEnd" type="Sprite2D" parent="CocinaSubterranea"]
+position = Vector2(3884, -590)
+centered = false
+scale = Vector2(1.12, 1.12)
+texture = ExtResource("1_cave")
+
 [node name="KitchenTint" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-980, -590, 1500, -590, 1500, 220, -980, 220)
+polygon = PackedVector2Array(-1020, -590, 5220, -590, 5220, 220, -1020, 220)
 color = Color(0.109804, 0.0117647, 0.0196078, 0.38)
 
 [node name="Ceiling" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-980, -390, 1500, -390, 1500, -350, -980, -350)
+polygon = PackedVector2Array(-1020, -390, 5220, -390, 5220, -350, -1020, -350)
 color = Color(0.160784, 0.054902, 0.0705882, 0.95)
 
 [node name="Floor" type="StaticBody2D" parent="."]
-position = Vector2(260, 185)
+position = Vector2(2085, 185)
 
 [node name="Tile" type="Polygon2D" parent="Floor"]
-polygon = PackedVector2Array(-1275, -21, 1275, -21, 1275, 21, -1275, 21)
+polygon = PackedVector2Array(-3100, -21, 3100, -21, 3100, 21, -3100, 21)
 color = Color(0.184314, 0.0901961, 0.0823529, 1)
 
 [node name="Rim" type="Polygon2D" parent="Floor"]
-polygon = PackedVector2Array(-1275, -21, 1275, -21, 1275, -13, -1275, -13)
+polygon = PackedVector2Array(-3100, -21, 3100, -21, 3100, -13, -3100, -13)
 color = Color(0.866667, 0.392157, 0.164706, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
@@ -61,7 +77,7 @@ position = Vector2(-995, -160)
 shape = SubResource("Shape_wall")
 
 [node name="RightWall" type="StaticBody2D" parent="."]
-position = Vector2(1515, -160)
+position = Vector2(5165, -160)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
 shape = SubResource("Shape_wall")
@@ -117,13 +133,12 @@ horizontal_alignment = 1
 
 [node name="Gato" parent="." instance=ExtResource("2_cat")]
 position = Vector2(-760, 130)
-jump_velocity = -420.0
 
 [node name="BarraDeVida" parent="." instance=ExtResource("3_hud")]
 
 [node name="Chef" parent="." instance=ExtResource("4_chef")]
-position = Vector2(-1120, 130)
-notice_distance = 1800.0
+position = Vector2(-940, 130)
+notice_distance = 6500.0
 chase_speed = 138.0
 invulnerable = true
 
@@ -154,18 +169,19 @@ position = Vector2(-50, 154)
 position = Vector2(-100, 130)
 
 [node name="PalancaDos" parent="." instance=ExtResource("6_lever")]
-position = Vector2(430, 130)
+position = Vector2(4250, 50)
 
 [node name="Checkpoint" parent="." instance=ExtResource("8_checkpoint")]
-position = Vector2(650, 130)
+position = Vector2(1100, 161)
 
 [node name="Barrera" parent="." instance=ExtResource("7_gate")]
-position = Vector2(800, 165)
+position = Vector2(4640, 165)
 
 [node name="Salida" parent="." instance=ExtResource("9_portal")]
-position = Vector2(1080, 130)
+position = Vector2(4860, 161)
 target_scene = "res://Escenas/Menu/Final.tscn"
 prompt = "ESCAPAR DE LA COCINA"
+required_levers = 2
 
 [node name="Interface" type="CanvasLayer" parent="."]
 
@@ -189,6 +205,161 @@ theme_override_colors/font_color = Color(1, 0.878431, 0.752941, 0.95)
 theme_override_colors/font_outline_color = Color(0.117647, 0.027451, 0.0235294, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 15
-text = "Activá las dos palancas y escapá antes de que el Chef te alcance."
+text = "Activa las dos palancas: entrada y despensa. El Chef sigue tus pasos."
 
 [node name="Pausa" parent="." instance=ExtResource("12_pause")]
+
+[node name="CounterThree" parent="." instance=ExtResource("14_platform")]
+position = Vector2(1470, 124)
+size = Vector2(180, 80)
+rock_color = Color(0.25, 0.1, 0.08, 1)
+rim_color = Color(0.88, 0.56, 0.25, 1)
+
+[node name="CounterFour" parent="." instance=ExtResource("14_platform")]
+position = Vector2(1850, 108)
+size = Vector2(200, 112)
+rock_color = Color(0.25, 0.1, 0.08, 1)
+rim_color = Color(0.88, 0.56, 0.25, 1)
+
+[node name="CounterFive" parent="." instance=ExtResource("14_platform")]
+position = Vector2(2230, 124)
+size = Vector2(180, 80)
+rock_color = Color(0.25, 0.1, 0.08, 1)
+rim_color = Color(0.88, 0.56, 0.25, 1)
+
+[node name="CounterSix" parent="." instance=ExtResource("14_platform")]
+position = Vector2(2700, 108)
+size = Vector2(220, 112)
+rock_color = Color(0.25, 0.1, 0.08, 1)
+rim_color = Color(0.88, 0.56, 0.25, 1)
+
+[node name="CounterSeven" parent="." instance=ExtResource("14_platform")]
+position = Vector2(3080, 124)
+size = Vector2(180, 80)
+rock_color = Color(0.25, 0.1, 0.08, 1)
+rim_color = Color(0.88, 0.56, 0.25, 1)
+
+[node name="CounterEight" parent="." instance=ExtResource("14_platform")]
+position = Vector2(3480, 108)
+size = Vector2(200, 112)
+rock_color = Color(0.25, 0.1, 0.08, 1)
+rim_color = Color(0.88, 0.56, 0.25, 1)
+
+[node name="CounterNine" parent="." instance=ExtResource("14_platform")]
+position = Vector2(3880, 124)
+size = Vector2(180, 80)
+rock_color = Color(0.25, 0.1, 0.08, 1)
+rim_color = Color(0.88, 0.56, 0.25, 1)
+
+[node name="CounterTen" parent="." instance=ExtResource("14_platform")]
+position = Vector2(4250, 108)
+size = Vector2(240, 112)
+rock_color = Color(0.25, 0.1, 0.08, 1)
+rim_color = Color(0.88, 0.56, 0.25, 1)
+
+[node name="CheckpointDespensa" parent="." instance=ExtResource("8_checkpoint")]
+position = Vector2(2450, 161)
+
+[node name="CheckpointFinal" parent="." instance=ExtResource("8_checkpoint")]
+position = Vector2(4040, 161)
+
+[node name="GuardianTres" parent="." instance=ExtResource("10_enemy")]
+position = Vector2(830, 130)
+
+[node name="GuardianCuatro" parent="." instance=ExtResource("10_enemy")]
+position = Vector2(1500, 65)
+
+[node name="GuardianCinco" parent="." instance=ExtResource("10_enemy")]
+position = Vector2(1880, 32)
+
+[node name="GuardianSeis" parent="." instance=ExtResource("10_enemy")]
+position = Vector2(2740, 32)
+
+[node name="GuardianSiete" parent="." instance=ExtResource("10_enemy")]
+position = Vector2(3510, 32)
+
+[node name="GuardianOcho" parent="." instance=ExtResource("10_enemy")]
+position = Vector2(4280, 32)
+
+[node name="Apple01" parent="." instance=ExtResource("5_food")]
+position = Vector2(-680, 134)
+food_type = 1
+
+[node name="Apple02" parent="." instance=ExtResource("5_food")]
+position = Vector2(-360, 24)
+food_type = 1
+
+[node name="Apple03" parent="." instance=ExtResource("5_food")]
+position = Vector2(250, 24)
+food_type = 1
+
+[node name="Apple04" parent="." instance=ExtResource("5_food")]
+position = Vector2(720, 134)
+food_type = 1
+
+[node name="Apple05" parent="." instance=ExtResource("5_food")]
+position = Vector2(1050, 134)
+food_type = 1
+
+[node name="Apple06" parent="." instance=ExtResource("5_food")]
+position = Vector2(1470, 54)
+food_type = 1
+
+[node name="Apple07" parent="." instance=ExtResource("5_food")]
+position = Vector2(1680, 134)
+food_type = 1
+
+[node name="Apple08" parent="." instance=ExtResource("5_food")]
+position = Vector2(1850, 22)
+food_type = 1
+
+[node name="Apple09" parent="." instance=ExtResource("5_food")]
+position = Vector2(2230, 54)
+food_type = 1
+
+[node name="Apple10" parent="." instance=ExtResource("5_food")]
+position = Vector2(2450, 134)
+food_type = 1
+
+[node name="Apple11" parent="." instance=ExtResource("5_food")]
+position = Vector2(2700, 22)
+food_type = 1
+
+[node name="Apple12" parent="." instance=ExtResource("5_food")]
+position = Vector2(3080, 54)
+food_type = 1
+
+[node name="Apple13" parent="." instance=ExtResource("5_food")]
+position = Vector2(3290, 134)
+food_type = 1
+
+[node name="Apple14" parent="." instance=ExtResource("5_food")]
+position = Vector2(3480, 22)
+food_type = 1
+
+[node name="Apple15" parent="." instance=ExtResource("5_food")]
+position = Vector2(3880, 54)
+food_type = 1
+
+[node name="Apple16" parent="." instance=ExtResource("5_food")]
+position = Vector2(4250, 22)
+food_type = 1
+
+[node name="Apple17" parent="." instance=ExtResource("5_food")]
+position = Vector2(4530, 134)
+food_type = 1
+
+[node name="FireAisle1" parent="." instance=ExtResource("11_hazard")]
+position = Vector2(1280, 154)
+
+[node name="FireAisle2" parent="." instance=ExtResource("11_hazard")]
+position = Vector2(2050, 154)
+
+[node name="FireAisle3" parent="." instance=ExtResource("11_hazard")]
+position = Vector2(2900, 154)
+
+[node name="FireAisle4" parent="." instance=ExtResource("11_hazard")]
+position = Vector2(3690, 154)
+
+[node name="FireAisle5" parent="." instance=ExtResource("11_hazard")]
+position = Vector2(4460, 154)

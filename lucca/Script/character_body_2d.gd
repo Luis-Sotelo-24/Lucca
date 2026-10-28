@@ -1,6 +1,6 @@
 extends CharacterBody2D
 @export var speed: float = 200.0
-@export var jump_velocity: float = -300.0
+@export var jump_velocity: float = -420.0
 @export var gravity: float = 900.0
 @export var respawn_position: Vector2
 @export var fall_death_y: float = 400
@@ -8,7 +8,9 @@ extends CharacterBody2D
 @export var air_attack_damage: int = 75
 @export var attack_duration: float = 0.45
 @export var max_jumps := 2
-@export var safe_fall := 200.0 
+@export var coyote_time := 0.10
+@export var jump_buffer_time := 0.12
+@export var safe_fall := 225.0
 @export var damage_per_px := 0.10
 @export var super_jump_velocity := -600.0
 @export var super_speed_multiplier := 2.0
@@ -31,6 +33,8 @@ var can_attack := true
 var facing_direction := 1
 var base_attack_x := 0.0
 var jump_count := 0
+var coyote_remaining := 0.0
+var jump_buffer_remaining := 0.0
 var was_on_floor := true
 var min_y_in_air := 0.0
 var stored_power: Power = Power.NONE
@@ -53,7 +57,7 @@ func _ready() -> void:
 	setup_camera_limits()
 	_setup_power_label()
 	GameManager.enemy_killed.connect(_on_enemy_killed)
-	if canvas_mod:
+	if canvas_mod and canvas_mod.visible:
 		var c := canvas_mod.color
 		self_modulate = Color(1.0 / c.r, 1.0 / c.g, 1.0 / c.b, 1.0)
 		print("Compensando oscuridad: ", self_modulate)
@@ -63,14 +67,24 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
-	if is_on_floor() and not ataque:
+	if is_on_floor():
 		jump_count = 0
-	
-	if Input.is_action_just_pressed("Saltar") and not ataque:
-		if jump_count < max_jumps:
-			velocity.y = jump_velocity
-			jump_count += 1
-			AudioDirector.play_jump()
+		coyote_remaining = coyote_time
+	else:
+		coyote_remaining = maxf(0.0, coyote_remaining - delta)
+		# Walking off a ledge still leaves one air jump, not two.
+		if coyote_remaining == 0.0 and jump_count == 0:
+			jump_count = 1
+
+	jump_buffer_remaining = maxf(0.0, jump_buffer_remaining - delta)
+	if Input.is_action_just_pressed("Saltar"):
+		jump_buffer_remaining = jump_buffer_time
+	if jump_buffer_remaining > 0.0 and jump_count < max_jumps and (not ataque or air_attacking):
+		velocity.y = jump_velocity
+		jump_count += 1
+		coyote_remaining = 0.0
+		jump_buffer_remaining = 0.0
+		AudioDirector.play_jump()
 	
 	if Input.is_action_just_pressed("Ataque") and can_attack:
 		if is_on_floor():
@@ -84,8 +98,8 @@ func _physics_process(delta: float) -> void:
 	if direction != 0:
 		facing_direction = 1 if direction > 0 else -1
 	
-	if ataque:
-		velocity.x = facing_direction if air_attacking else 0
+	if ataque and not air_attacking:
+		velocity.x = 0
 	else:
 		var cur_speed := 350.0 if Input.is_action_pressed("Correr") else 200.0
 		if super_speed_active:
@@ -225,6 +239,9 @@ func heal(amount: int) -> void:
 func die() -> void:
 	global_position = respawn_position
 	velocity = Vector2.ZERO
+	jump_count = 0
+	coyote_remaining = 0.0
+	jump_buffer_remaining = 0.0
 	stats.reset()
 	ataque = false
 	air_attacking = false

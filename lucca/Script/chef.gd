@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var capture_distance := 38.0
 @export var max_health := 100
 @export var invulnerable := false
+@export var obstacle_jump_velocity := -500.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var speech: Label = $Speech
@@ -53,6 +54,8 @@ func _physics_process(delta: float) -> void:
 
 	var direction := signf(horizontal_distance)
 	velocity.x = direction * chase_speed
+	if is_on_floor() and is_on_wall():
+		velocity.y = obstacle_jump_velocity
 	animated_sprite.flip_h = direction < 0.0
 	if animated_sprite.animation != "Walk":
 		animated_sprite.play("Walk")

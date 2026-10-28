@@ -10,9 +10,11 @@
 [ext_resource type="PackedScene" path="res://Escenas/Objetos/Checkpoint.tscn" id="8_checkpoint"]
 [ext_resource type="PackedScene" path="res://Escenas/Objetos/Peligro.tscn" id="9_hazard"]
 [ext_resource type="PackedScene" path="res://Escenas/Hud/Pausa.tscn" id="10_pause"]
+[ext_resource type="Script" path="res://Script/nivel.gd" id="11_level"]
+[ext_resource type="PackedScene" path="res://Escenas/Objetos/Plataforma.tscn" id="12_platform"]
 
 [sub_resource type="RectangleShape2D" id="Shape_floor"]
-size = Vector2(2350, 42)
+size = Vector2(6200, 42)
 
 [sub_resource type="RectangleShape2D" id="Shape_platform_large"]
 size = Vector2(270, 28)
@@ -27,6 +29,7 @@ size = Vector2(110, 28)
 size = Vector2(40, 700)
 
 [node name="Nivel2" type="Node2D"]
+script = ExtResource("11_level")
 
 [node name="Caverna" type="Node2D" parent="." groups=["background"]]
 
@@ -36,8 +39,20 @@ centered = false
 scale = Vector2(1.12, 1.12)
 texture = ExtResource("1_cave")
 
+[node name="BackgroundMiddle" type="Sprite2D" parent="Caverna"]
+position = Vector2(1512, -590)
+centered = false
+scale = Vector2(1.12, 1.12)
+texture = ExtResource("1_cave")
+
+[node name="BackgroundEnd" type="Sprite2D" parent="Caverna"]
+position = Vector2(3944, -590)
+centered = false
+scale = Vector2(1.12, 1.12)
+texture = ExtResource("1_cave")
+
 [node name="Tint" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-920, -590, 1510, -590, 1510, 220, -920, 220)
+polygon = PackedVector2Array(-920, -590, 5360, -590, 5360, 220, -920, 220)
 color = Color(0.0156863, 0.00784314, 0.0588235, 0.25)
 
 [node name="LavaGlow" type="Polygon2D" parent="."]
@@ -53,14 +68,14 @@ polygon = PackedVector2Array(880, 154, 1110, 154, 1110, 190, 880, 190)
 color = Color(1, 0.2, 0.0980392, 0.45)
 
 [node name="Floor" type="StaticBody2D" parent="."]
-position = Vector2(290, 185)
+position = Vector2(2220, 185)
 
 [node name="Rock" type="Polygon2D" parent="Floor"]
-polygon = PackedVector2Array(-1175, -21, 1175, -21, 1175, 21, -1175, 21)
+polygon = PackedVector2Array(-3100, -21, 3100, -21, 3100, 21, -3100, 21)
 color = Color(0.14902, 0.0823529, 0.254902, 1)
 
 [node name="Rim" type="Polygon2D" parent="Floor"]
-polygon = PackedVector2Array(-1175, -21, 1175, -21, 1175, -13, -1175, -13)
+polygon = PackedVector2Array(-3100, -21, 3100, -21, 3100, -13, -3100, -13)
 color = Color(0.572549, 0.235294, 0.439216, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
@@ -73,7 +88,7 @@ position = Vector2(-860, -160)
 shape = SubResource("Shape_wall")
 
 [node name="RightWall" type="StaticBody2D" parent="."]
-position = Vector2(1440, -160)
+position = Vector2(5300, -160)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
 shape = SubResource("Shape_wall")
@@ -91,6 +106,7 @@ color = Color(0.85098, 0.360784, 0.541176, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformOne"]
 shape = SubResource("Shape_platform_large")
+one_way_collision = true
 
 [node name="PlatformTwo" type="StaticBody2D" parent="."]
 position = Vector2(-130, 15)
@@ -105,6 +121,7 @@ color = Color(0.85098, 0.360784, 0.541176, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformTwo"]
 shape = SubResource("Shape_platform_medium")
+one_way_collision = true
 
 [node name="PlatformThree" type="StaticBody2D" parent="."]
 position = Vector2(395, 70)
@@ -119,6 +136,7 @@ color = Color(0.85098, 0.360784, 0.541176, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformThree"]
 shape = SubResource("Shape_platform_small")
+one_way_collision = true
 
 [node name="PlatformFour" type="StaticBody2D" parent="."]
 position = Vector2(690, 5)
@@ -133,10 +151,10 @@ color = Color(0.85098, 0.360784, 0.541176, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformFour"]
 shape = SubResource("Shape_platform_large")
+one_way_collision = true
 
 [node name="Gato" parent="." instance=ExtResource("2_cat")]
 position = Vector2(-730, 130)
-jump_velocity = -360.0
 
 [node name="BarraDeVida" parent="." instance=ExtResource("3_hud")]
 
@@ -147,7 +165,7 @@ position = Vector2(-235, 130)
 position = Vector2(235, 130)
 
 [node name="Chef" parent="." instance=ExtResource("5_chef")]
-position = Vector2(1040, 130)
+position = Vector2(4950, 130)
 notice_distance = 500.0
 chase_speed = 125.0
 
@@ -163,10 +181,10 @@ position = Vector2(690, -60)
 food_type = 2
 
 [node name="CheckpointPuente" parent="." instance=ExtResource("8_checkpoint")]
-position = Vector2(-100, 130)
+position = Vector2(60, 161)
 
 [node name="CheckpointSalida" parent="." instance=ExtResource("8_checkpoint")]
-position = Vector2(760, 130)
+position = Vector2(1370, 161)
 
 [node name="FuegoUno" parent="." instance=ExtResource("9_hazard")]
 position = Vector2(-525, 154)
@@ -178,7 +196,7 @@ position = Vector2(390, 154)
 position = Vector2(995, 154)
 
 [node name="PortalCocina" parent="." instance=ExtResource("7_portal")]
-position = Vector2(1320, 130)
+position = Vector2(5120, 161)
 target_scene = "res://Escenas/Niveles/Nivel3.tscn"
 prompt = "ENTRAR A LA COCINA"
 
@@ -204,6 +222,159 @@ theme_override_colors/font_color = Color(0.901961, 0.8, 0.929412, 0.95)
 theme_override_colors/font_outline_color = Color(0.0862745, 0.0235294, 0.121569, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 15
-text = "Cruzá la caverna y escapá del Chef."
+text = "Cruza los dos puentes de roca, recoge frutas y llega a la cocina."
 
 [node name="Pausa" parent="." instance=ExtResource("10_pause")]
+
+[node name="BridgeOneStep1" parent="." instance=ExtResource("12_platform")]
+position = Vector2(1640, 124)
+size = Vector2(200, 80)
+
+[node name="BridgeOneStep2" parent="." instance=ExtResource("12_platform")]
+position = Vector2(1940, 88)
+size = Vector2(220, 152)
+
+[node name="BridgeOneSummit" parent="." instance=ExtResource("12_platform")]
+position = Vector2(2260, 52)
+size = Vector2(240, 224)
+
+[node name="BridgeOneStep4" parent="." instance=ExtResource("12_platform")]
+position = Vector2(2570, 88)
+size = Vector2(200, 152)
+
+[node name="BridgeOneStep5" parent="." instance=ExtResource("12_platform")]
+position = Vector2(2860, 124)
+size = Vector2(220, 80)
+
+[node name="CheckpointGaleria" parent="." instance=ExtResource("8_checkpoint")]
+position = Vector2(3150, 161)
+
+[node name="BridgeTwoStep1" parent="." instance=ExtResource("12_platform")]
+position = Vector2(3450, 124)
+size = Vector2(200, 80)
+
+[node name="BridgeTwoStep2" parent="." instance=ExtResource("12_platform")]
+position = Vector2(3740, 88)
+size = Vector2(220, 152)
+
+[node name="BridgeTwoSummit" parent="." instance=ExtResource("12_platform")]
+position = Vector2(4020, 52)
+size = Vector2(240, 224)
+
+[node name="BridgeTwoStep4" parent="." instance=ExtResource("12_platform")]
+position = Vector2(4300, 88)
+size = Vector2(200, 152)
+
+[node name="BridgeTwoStep5" parent="." instance=ExtResource("12_platform")]
+position = Vector2(4590, 124)
+size = Vector2(220, 80)
+
+[node name="GuardianBridge1" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(1680, 65)
+
+[node name="GuardianBridge2" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(2280, -80)
+
+[node name="GuardianBridge3" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(2870, 65)
+
+[node name="GuardianBridge4" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(3480, 65)
+
+[node name="GuardianBridge5" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(4050, -80)
+
+[node name="GuardianBridge6" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(4610, 65)
+
+[node name="Apple01" parent="." instance=ExtResource("6_food")]
+position = Vector2(-680, 134)
+food_type = 1
+
+[node name="Apple02" parent="." instance=ExtResource("6_food")]
+position = Vector2(0, 134)
+food_type = 1
+
+[node name="Apple03" parent="." instance=ExtResource("6_food")]
+position = Vector2(1060, 134)
+food_type = 1
+
+[node name="Apple04" parent="." instance=ExtResource("6_food")]
+position = Vector2(1390, 134)
+food_type = 1
+
+[node name="Apple05" parent="." instance=ExtResource("6_food")]
+position = Vector2(1640, 54)
+food_type = 1
+
+[node name="Apple06" parent="." instance=ExtResource("6_food")]
+position = Vector2(1940, -18)
+food_type = 1
+
+[node name="Apple07" parent="." instance=ExtResource("6_food")]
+position = Vector2(2260, -90)
+food_type = 1
+
+[node name="Apple08" parent="." instance=ExtResource("6_food")]
+position = Vector2(2570, -18)
+food_type = 1
+
+[node name="Apple09" parent="." instance=ExtResource("6_food")]
+position = Vector2(2860, 54)
+food_type = 1
+
+[node name="Apple10" parent="." instance=ExtResource("6_food")]
+position = Vector2(3150, 134)
+food_type = 1
+
+[node name="Apple11" parent="." instance=ExtResource("6_food")]
+position = Vector2(3450, 54)
+food_type = 1
+
+[node name="Apple12" parent="." instance=ExtResource("6_food")]
+position = Vector2(3740, -18)
+food_type = 1
+
+[node name="Apple13" parent="." instance=ExtResource("6_food")]
+position = Vector2(4020, -90)
+food_type = 1
+
+[node name="Apple14" parent="." instance=ExtResource("6_food")]
+position = Vector2(4300, -18)
+food_type = 1
+
+[node name="Apple15" parent="." instance=ExtResource("6_food")]
+position = Vector2(4590, 54)
+food_type = 1
+
+[node name="Apple16" parent="." instance=ExtResource("6_food")]
+position = Vector2(4800, 134)
+food_type = 1
+
+[node name="Apple17" parent="." instance=ExtResource("6_food")]
+position = Vector2(5030, 134)
+food_type = 1
+
+[node name="FireBridge1" parent="." instance=ExtResource("9_hazard")]
+position = Vector2(1790, 154)
+
+[node name="FireBridge2" parent="." instance=ExtResource("9_hazard")]
+position = Vector2(2090, 154)
+
+[node name="FireBridge3" parent="." instance=ExtResource("9_hazard")]
+position = Vector2(2420, 154)
+
+[node name="FireBridge4" parent="." instance=ExtResource("9_hazard")]
+position = Vector2(2710, 154)
+
+[node name="FireBridge5" parent="." instance=ExtResource("9_hazard")]
+position = Vector2(3590, 154)
+
+[node name="FireBridge6" parent="." instance=ExtResource("9_hazard")]
+position = Vector2(3870, 154)
+
+[node name="FireBridge7" parent="." instance=ExtResource("9_hazard")]
+position = Vector2(4170, 154)
+
+[node name="FireBridge8" parent="." instance=ExtResource("9_hazard")]
+position = Vector2(4440, 154)
