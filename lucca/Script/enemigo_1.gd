@@ -122,6 +122,8 @@ func take_damage(amount: int):
 		die()
 
 func die():
+	if dead:
+		return
 	dead = true
 	set_physics_process(false)
 	print("Enemigo murió")

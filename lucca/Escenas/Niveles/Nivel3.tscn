@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://Backgrounds/Caverna.png" id="1_cave"]
+[ext_resource type="Script" path="res://Script/fondo_cocina.gd" id="1_kitchen"]
 [ext_resource type="PackedScene" path="res://Escenas/Lucca/Gato.tscn" id="2_cat"]
 [ext_resource type="PackedScene" path="res://Escenas/Hud/Barra de Vida.tscn" id="3_hud"]
 [ext_resource type="PackedScene" path="res://Escenas/Enemigos/Chef.tscn" id="4_chef"]
@@ -29,32 +29,8 @@ script = ExtResource("13_level")
 camera_bounds = Rect2(-975, -590, 6160, 810)
 
 [node name="CocinaSubterranea" type="Node2D" parent="." groups=["background"]]
-
-[node name="Sprite2D" type="Sprite2D" parent="CocinaSubterranea"]
-position = Vector2(-980, -590)
-centered = false
-scale = Vector2(1.12, 1.12)
-texture = ExtResource("1_cave")
-
-[node name="BackgroundMiddle" type="Sprite2D" parent="CocinaSubterranea"]
-position = Vector2(1452, -590)
-centered = false
-scale = Vector2(1.12, 1.12)
-texture = ExtResource("1_cave")
-
-[node name="BackgroundEnd" type="Sprite2D" parent="CocinaSubterranea"]
-position = Vector2(3884, -590)
-centered = false
-scale = Vector2(1.12, 1.12)
-texture = ExtResource("1_cave")
-
-[node name="KitchenTint" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-1020, -590, 5220, -590, 5220, 220, -1020, 220)
-color = Color(0.109804, 0.0117647, 0.0196078, 0.38)
-
-[node name="Ceiling" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-1020, -390, 5220, -390, 5220, -350, -1020, -350)
-color = Color(0.160784, 0.054902, 0.0705882, 0.95)
+z_index = -100
+script = ExtResource("1_kitchen")
 
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2(2085, 185)
@@ -280,6 +256,14 @@ position = Vector2(3510, 32)
 
 [node name="GuardianOcho" parent="." instance=ExtResource("10_enemy")]
 position = Vector2(4280, 32)
+
+[node name="GuardianCocinaUno" parent="." instance=ExtResource("10_enemy")]
+position = Vector2(2295, 70)
+patrol_speed = 50.0
+
+[node name="GuardianCocinaDos" parent="." instance=ExtResource("10_enemy")]
+position = Vector2(3945, 70)
+patrol_speed = 50.0
 
 [node name="Apple01" parent="." instance=ExtResource("5_food")]
 position = Vector2(-680, 134)

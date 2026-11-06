@@ -7,7 +7,7 @@ extends CharacterBody2D
 @export var damage: int = 50
 @export var air_attack_damage: int = 75
 @export var attack_duration: float = 0.45
-@export var max_jumps := 2
+@export var max_jumps:= 2
 @export var coyote_time := 0.10
 @export var jump_buffer_time := 0.12
 @export var safe_fall := 225.0
@@ -79,7 +79,9 @@ func _physics_process(delta: float) -> void:
 	jump_buffer_remaining = maxf(0.0, jump_buffer_remaining - delta)
 	if Input.is_action_just_pressed("Saltar"):
 		jump_buffer_remaining = jump_buffer_time
-	if jump_buffer_remaining > 0.0 and jump_count < max_jumps and (not ataque or air_attacking):
+	if jump_buffer_remaining > 0.0 and jump_count < max_jumps:
+		if ataque:
+			air_attacking = true
 		velocity.y = jump_velocity
 		jump_count += 1
 		coyote_remaining = 0.0
