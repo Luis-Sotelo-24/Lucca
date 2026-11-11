@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Lucca"
-run/main_scene="uid://cmbhx166dyjnw"
+run/main_scene="res://Escenas/Menu/MenuInicio.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-GameManager="*uid://dbn0xtr7v3tmi"
+GameManager="*res://Script/game_manager.gd"
 AudioDirector="*res://Script/audio_director.gd"
 
 [display]

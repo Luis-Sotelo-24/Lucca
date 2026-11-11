@@ -19,6 +19,7 @@ func _initialize() -> void:
 func run_tests() -> void:
 	await test_double_jump_and_buffer()
 	await test_ledge_grace()
+	await test_jump_during_attack()
 	await test_air_attack()
 	await test_food_and_combat()
 	await test_checkpoint()
@@ -230,3 +231,16 @@ func test_locked_exit() -> void:
 	player.position = portal.position
 	await tick(15)
 	check(current_scene == world and not portal.used, "One lever must not unlock the kitchen exit")
+
+func test_jump_during_attack() -> void:
+	await setup_world()
+	await press("Ataque")
+	check(player.ataque, "Ground attack must begin")
+	await press("Saltar")
+	await tick(2)
+	check(player.velocity.y < -300, "Attack must not swallow jump input")
+	check(player.air_attacking, "Jump must allow movement during attack")
+	await tick(20)
+	await press("Saltar")
+	await tick(2)
+	check(player.velocity.y < -300, "Second jump must remain available after attack")
